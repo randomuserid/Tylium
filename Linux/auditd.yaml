@@ -20,7 +20,7 @@
 - -a always,exit -F arch=b64 -S clock_settime -F a0=0x0 -F key=time-change
 - -w /etc/localtime -p wa -k time-change
 
-## Things that could affect system locale
+## Things that could affect system locale 6
 - -a always,exit -F arch=b32 -S sethostname,setdomainname -F key=system-locale
 - -a always,exit -F arch=b64 -S sethostname,setdomainname -F key=system-locale
 - -w /etc/issue -p wa -k system-locale
@@ -28,13 +28,13 @@
 - -w /etc/hosts -p wa -k system-locale
 - -w /etc/hostname -p wa -k system-locale
 
-#- -w /etc/sysconfig/network -p wa -k system-locale
+#- -w /etc/sysconfig/network -p wa -k system-locale 12
 - -a always,exit -F dir=/etc/NetworkManager/ -F perm=wa -F key=system-locale
 
 ## Modprobe configuration
 - -w /etc/modprobe.conf -p wa -k modprobe
 
-## watch for containers that may change their configuration
+## watch for containers that may change their configuration 14
 - -a always,exit -F arch=b32 -S unshare,setns -F key=container-config
 - -a always,exit -F arch=b64 -S unshare,setns -F key=container-config
 
@@ -44,21 +44,21 @@
 #Configure with the location of auditd or go-audit dirs
 #- -w /var/log/audit/ -k audit-logs
 
-## User file changes
+## User file changes 16
 - -w /etc/group -p wa -k auth-changes
 - -w /etc/passwd -p wa -k auth-changes
 - -w /etc/gshadow -p wa -k auth-changes
 - -w /etc/shadow -p wa -k auth-changes
 - -w /etc/security/opasswd -p wa -k auth-changes
 
-## Sudoers file changes
+## Sudoers file changes 21
 - -w /etc/sudoers -p wa -k auth-changes
 
-## SSH service config changes
+## SSH service config changes 22
 
 - -w /etc/ssh/sshd_config -k sshd
 
-## Cron configuration & scheduled jobs
+## Cron configuration & scheduled jobs 23
 - -w /etc/cron.allow -p wa -k cron
 - -w /etc/cron.deny -p wa -k cron
 - -w /etc/cron.d/ -p wa -k cron
@@ -69,39 +69,39 @@
 - -w /etc/crontab -p wa -k cron
 - -w /var/spool/cron/crontabs/ -k cron
 
-## unsuccessful creation
+## unsuccessful creation 32
 - -a always,exit -F arch=b32 -S creat,link,mknod,mkdir,symlink,mknodat,linkat,symlinkat -F exit=-EACCES -F key=creation
 - -a always,exit -F arch=b64 -S mkdir,creat,link,symlink,mknod,mknodat,linkat,symlinkat -F exit=-EACCES -F key=creation
 - -a always,exit -F arch=b32 -S link,mkdir,symlink,mkdirat -F exit=-EPERM -F key=creation
 - -a always,exit -F arch=b64 -S mkdir,link,symlink,mkdirat -F exit=-EPERM -F key=creation
 
-## unsuccessful open
+## unsuccessful open 36
 - -a always,exit -F arch=b32 -S open,openat,open_by_handle_at -F exit=-EACCES -F key=open
 - -a always,exit -F arch=b64 -S open,openat,open_by_handle_at -F exit=-EACCES -F key=open
 - -a always,exit -F arch=b32 -S open,openat,open_by_handle_at -F exit=-EPERM -F key=open
 - -a always,exit -F arch=b64 -S open,openat,open_by_handle_at -F exit=-EPERM -F key=open
 
-## unsuccessful close
+## unsuccessful close 40
 - -a always,exit -F arch=b32 -S close -F exit=-EIO -F key=close
 - -a always,exit -F arch=b64 -S close -F exit=-EIO -F key=close
 
-## unsuccessful modifications
+## unsuccessful modifications 42
 - -a always,exit -F arch=b32 -S rename -S renameat -S truncate -S chmod -S setxattr -S lsetxattr -S removexattr -S lremovexattr -F exit=-EACCES -F key=mods
 - -a always,exit -F arch=b64 -S rename -S renameat -S truncate -S chmod -S setxattr -S lsetxattr -S removexattr -S lremovexattr -F exit=-EACCES -F key=mods
 - -a always,exit -F arch=b32 -S rename -S renameat -S truncate -S chmod -S setxattr -S lsetxattr -S removexattr -S lremovexattr -F exit=-EPERM -F key=mods
 - -a always,exit -F arch=b64 -S rename -S renameat -S truncate -S chmod -S setxattr -S lsetxattr -S removexattr -S lremovexattr -F exit=-EPERM -F key=mods
 
-## unsuccessful deletion
+## unsuccessful deletion 46
 - -a always,exit -F arch=b32 -S unlink,rmdir,unlinkat -F exit=-EACCES -F key=delete
 - -a always,exit -F arch=b64 -S rmdir,unlink,unlinkat -F exit=-EACCES -F key=delete
 - -a always,exit -F arch=b32 -S unlink,rmdir,unlinkat -F exit=-EPERM -F key=delete
 - -a always,exit -F arch=b64 -S rmdir,unlink,unlinkat -F exit=-EPERM -F key=delete
 
 #--------------------------------------------------------------------
-#                       Interesting process activity
+#                       Interesting process activity 51
 #--------------------------------------------------------------------
 
-- -w /bin/bash-p x -k interesting-bin
+- -w /bin/bash -p x -k interesting-bin
 - -w /bin/mknod -p x -k interesting-bin
 - -w /bin/nc -p x -k interesting-bin
 - -w /bin/nc.openbsd -p x -k interesting-bin
@@ -125,7 +125,7 @@
 - -w /usr/bin/wget -p x -k interesting-bin
 - -w /usr/bin/whois -p x -k interesting-bin
 
-# Sbin interesting activity
+# Sbin interesting activity 74
 
 - -w /sbin/auditctl -p x -k audittools
 - -w /sbin/auditd -p x -k audittools
@@ -144,7 +144,7 @@
 #                       Suspicious activity
 #--------------------------------------------------------------------
 
-# Privliege elevation
+# Privliege elevation 86
 
 - -w /bin/su -p x -k elevation
 - -w /usr/bin/sudo -p x -k elevation
