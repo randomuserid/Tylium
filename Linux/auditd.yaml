@@ -106,7 +106,6 @@
 - -w /bin/nc -p x -k interesting-bin
 - -w /bin/nc.openbsd -p x -k interesting-bin
 - -w /bin/netcat -p x -k interesting-bin
-- -w /bin/su -p x -k elevation
 - -w /bin/systemctl -p x -k systemd
 - -w /usr/bin/base64 -p x -k interesting-bin
 - -w /usr/bin/curl -p x -k interesting-bin
@@ -120,7 +119,6 @@
 - -w /usr/bin/socat -p x -k interesting-bin
 - -w /usr/bin/ssh -p x -k interesting-bin
 - -w /usr/bin/strace -p x -k interesting-bin
-- -w /usr/bin/sudo -p x -k elevation
 - -w /usr/bin/tcpdump -p x -k interesting-bin
 - -w /usr/bin/wget -p x -k interesting-bin
 - -w /usr/bin/whois -p x -k interesting-bin
