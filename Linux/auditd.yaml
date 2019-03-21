@@ -101,44 +101,44 @@
 #                       Interesting process activity
 #--------------------------------------------------------------------
 
- - -w /bin/bash-p x -k interesting-bin
- - -w /bin/mknod -p x -k interesting-bin
- - -w /bin/nc -p x -k interesting-bin
- - -w /bin/nc.openbsd -p x -k interesting-bin
- - -w /bin/netcat -p x -k interesting-bin
- - -w /bin/su -p x -k elevation
- - -w /bin/systemctl -p x -k systemd
- - -w /usr/bin/base64 -p x -k interesting-bin
- - -w /usr/bin/curl -p x -k interesting-bin
- - -w /usr/bin/ftp -p x -k interesting-bin
- - -w /usr/bin/gcc -p x -k interesting-bin
- - -w /usr/bin/ncat -p x -k interesting-bin
- - -w /usr/bin/nmap -p x -k interesting-bin
- - -w /usr/bin/rawshark -p x -k interesting-bin
- - -w /usr/bin/rdesktop -p x -k interesting-sbin
- - -w /usr/bin/scp -p x -k interesting-bin
- - -w /usr/bin/socat -p x -k interesting-bin
- - -w /usr/bin/ssh -p x -k interesting-bin
- - -w /usr/bin/strace -p x -k interesting-bin
- - -w /usr/bin/sudo -p x -k elevation
- - -w /usr/bin/tcpdump -p x -k interesting-bin
- - -w /usr/bin/wget -p x -k interesting-bin
- - -w /usr/bin/whois -p x -k interesting-bin
+- -w /bin/bash-p x -k interesting-bin
+- -w /bin/mknod -p x -k interesting-bin
+- -w /bin/nc -p x -k interesting-bin
+- -w /bin/nc.openbsd -p x -k interesting-bin
+- -w /bin/netcat -p x -k interesting-bin
+- -w /bin/su -p x -k elevation
+- -w /bin/systemctl -p x -k systemd
+- -w /usr/bin/base64 -p x -k interesting-bin
+- -w /usr/bin/curl -p x -k interesting-bin
+- -w /usr/bin/ftp -p x -k interesting-bin
+- -w /usr/bin/gcc -p x -k interesting-bin
+- -w /usr/bin/ncat -p x -k interesting-bin
+- -w /usr/bin/nmap -p x -k interesting-bin
+- -w /usr/bin/rawshark -p x -k interesting-bin
+- -w /usr/bin/rdesktop -p x -k interesting-sbin
+- -w /usr/bin/scp -p x -k interesting-bin
+- -w /usr/bin/socat -p x -k interesting-bin
+- -w /usr/bin/ssh -p x -k interesting-bin
+- -w /usr/bin/strace -p x -k interesting-bin
+- -w /usr/bin/sudo -p x -k elevation
+- -w /usr/bin/tcpdump -p x -k interesting-bin
+- -w /usr/bin/wget -p x -k interesting-bin
+- -w /usr/bin/whois -p x -k interesting-bin
 
 # Sbin interesting activity
 
- - -w /sbin/auditctl -p x -k audittools
- - -w /sbin/auditd -p x -k audittools
- - -w /sbin/ifconfig -p x -k interesting-sbin
- - -w /sbin/iptables -p x -k interesting-sbin
- - -w /usr/sbin/addgroup -p x -k interesting-sbin
- - -w /usr/sbin/adduser -p x -k interesting-sbin
- - -w /usr/sbin/groupadd -p x -k interesting-sbin
- - -w /usr/sbin/groupmod -p x -k interesting-sbin
- - -w /usr/sbin/tcpdump -p x -k interesting-sbin
- - -w /usr/sbin/traceroute -p x -k interesting-sbin
- - -w /usr/sbin/useradd -p x -k interesting-sbin
- - -w /usr/sbin/usermod -p x -k interesting-sbin
+- -w /sbin/auditctl -p x -k audittools
+- -w /sbin/auditd -p x -k audittools
+- -w /sbin/ifconfig -p x -k interesting-sbin
+- -w /sbin/iptables -p x -k interesting-sbin
+- -w /usr/sbin/addgroup -p x -k interesting-sbin
+- -w /usr/sbin/adduser -p x -k interesting-sbin
+- -w /usr/sbin/groupadd -p x -k interesting-sbin
+- -w /usr/sbin/groupmod -p x -k interesting-sbin
+- -w /usr/sbin/tcpdump -p x -k interesting-sbin
+- -w /usr/sbin/traceroute -p x -k interesting-sbin
+- -w /usr/sbin/useradd -p x -k interesting-sbin
+- -w /usr/sbin/usermod -p x -k interesting-sbin
 
 #--------------------------------------------------------------------
 #                       Suspicious activity
@@ -146,8 +146,8 @@
 
 # Privliege elevation
 
- - -w /bin/su -p x -k elevation
- - -w /usr/bin/sudo -p x -k elevation
+- -w /bin/su -p x -k elevation
+- -w /usr/bin/sudo -p x -k elevation
 
 ## An admin may be rooting around
 - -a always,exit -F dir=/home -F uid=0 -F auid>=1000 -F auid!=4294967295 -C auid!=obj_uid -F key=root
