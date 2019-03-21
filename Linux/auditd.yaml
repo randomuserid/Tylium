@@ -4,10 +4,10 @@
 #Contents:
 
 #Configuration
-#File activity
+#Interesting process activity
+#Suspicious activity
 #Network activity
 #Process activity
-#Suspicious activity
 
 #--------------------------------------------------------------------
 #                       Configuration
@@ -34,16 +34,9 @@
 ## Modprobe configuration
 - -w /etc/modprobe.conf -p wa -k modprobe
 
-## Stunnel
-- -w /usr/sbin/stunnel -p x -k stunnel
-
 ## watch for containers that may change their configuration
 - -a always,exit -F arch=b32 -S unshare,setns -F key=container-config
 - -a always,exit -F arch=b64 -S unshare,setns -F key=container-config
-
-#--------------------------------------------------------------------
-#                       File activity
-#--------------------------------------------------------------------
 
 # Configure if using SElinux
 #- -w /etc/selinux -p wa -k selinux-changes
@@ -59,10 +52,11 @@
 - -w /etc/security/opasswd -p wa -k auth-changes
 
 ## Sudoers file changes
-- -w /etc/sudoers -p wa -k actions
+- -w /etc/sudoers -p wa -k auth-changes
 
-## Passwd mods
-- -w /usr/bin/passwd -p x -k passwd_modification
+## SSH service config changes
+
+- -w /etc/ssh/sshd_config -k sshd
 
 ## Cron configuration & scheduled jobs
 - -w /etc/cron.allow -p wa -k cron
@@ -104,37 +98,63 @@
 - -a always,exit -F arch=b64 -S rmdir,unlink,unlinkat -F exit=-EPERM -F key=delete
 
 #--------------------------------------------------------------------
-#                       Network activity
+#                       Interesting process activity
 #--------------------------------------------------------------------
 
-## All network syscalls making or recieving network connections
+ - -w /bin/bash-p x -k interesting-bin
+ - -w /bin/mknod -p x -k interesting-bin
+ - -w /bin/nc -p x -k interesting-bin
+ - -w /bin/nc.openbsd -p x -k interesting-bin
+ - -w /bin/netcat -p x -k interesting-bin
+ - -w /bin/su -p x -k elevation
+ - -w /bin/systemctl -p x -k systemd
+ - -w /usr/bin/base64 -p x -k interesting-bin
+ - -w /usr/bin/curl -p x -k interesting-bin
+ - -w /usr/bin/ftp -p x -k interesting-bin
+ - -w /usr/bin/gcc -p x -k interesting-bin
+ - -w /usr/bin/ncat -p x -k interesting-bin
+ - -w /usr/bin/nmap -p x -k interesting-bin
+ - -w /usr/bin/rawshark -p x -k interesting-bin
+ - -w /usr/bin/rdesktop -p x -k interesting-sbin
+ - -w /usr/bin/scp -p x -k interesting-bin
+ - -w /usr/bin/socat -p x -k interesting-bin
+ - -w /usr/bin/ssh -p x -k interesting-bin
+ - -w /usr/bin/strace -p x -k interesting-bin
+ - -w /usr/bin/sudo -p x -k elevation
+ - -w /usr/bin/tcpdump -p x -k interesting-bin
+ - -w /usr/bin/wget -p x -k interesting-bin
+ - -w /usr/bin/whois -p x -k interesting-bin
 
-- -a always,exit -F arch=b64 -S accept,bind,connect,listen -F key=network
-##- -a always,exit -F arch=b32 -S accept,bind,connect,listen -F key=network
+# Sbin interesting activity
 
-#--------------------------------------------------------------------
-#                       Process activity
-#--------------------------------------------------------------------
-
-## If you are on a 64 bit platform, everything _should_ be running
-## in 64 bit mode. This rule will detect any use of the 32 bit syscalls
-## because this might be a sign of someone exploiting a hole in the 32
-## bit API.
-- -a always,exit -F arch=b32 -S all -F key=32bit-abi
-
-# All process and command execution
-- -a exit,always -F arch=b64 -S execve,execveat -F
+ - -w /sbin/auditctl -p x -k audittools
+ - -w /sbin/auditd -p x -k audittools
+ - -w /sbin/ifconfig -p x -k interesting-sbin
+ - -w /sbin/iptables -p x -k interesting-sbin
+ - -w /usr/sbin/addgroup -p x -k interesting-sbin
+ - -w /usr/sbin/adduser -p x -k interesting-sbin
+ - -w /usr/sbin/groupadd -p x -k interesting-sbin
+ - -w /usr/sbin/groupmod -p x -k interesting-sbin
+ - -w /usr/sbin/tcpdump -p x -k interesting-sbin
+ - -w /usr/sbin/traceroute -p x -k interesting-sbin
+ - -w /usr/sbin/useradd -p x -k interesting-sbin
+ - -w /usr/sbin/usermod -p x -k interesting-sbin
 
 #--------------------------------------------------------------------
 #                       Suspicious activity
 #--------------------------------------------------------------------
+
+# Privliege elevation
+
+ - -w /bin/su -p x -k elevation
+ - -w /usr/bin/sudo -p x -k elevation
 
 ## An admin may be rooting around
 - -a always,exit -F dir=/home -F uid=0 -F auid>=1000 -F auid!=4294967295 -C auid!=obj_uid -F key=root
 
 ## Ptrace code injection - could be suspicious or just debugging
 
-#-a always,exit -F arch=b32 -S ptrace -F key=tracing
+#-a always,exit -F arch=b32 -S ptrace -F key=tracing (55)
 - -a always,exit -F arch=b32 -S ptrace -F a0=0x4 -F key=code-injection
 - -a always,exit -F arch=b64 -S ptrace -F a0=0x4 -F key=code-injection
 - -a always,exit -F arch=b32 -S ptrace -F a0=0x5 -F key=data-injection
@@ -156,10 +176,35 @@
 ## These are rules are to locate poorly written programs.
 ## Its never planned to waste time on a syscall with incorrect parameters
 ## This is more of a debugging step than something people should run with
-## in production.
+## in production. (70-71)
 - -a never,exit -F arch=b64 -S rt_sigreturn
 - -a always,exit -S all -F exit=-EINVAL -F key=einval-retcode
 
-#Lastly
+#--------------------------------------------------------------------
+#                       Network activity
+#--------------------------------------------------------------------
 
-- -e 1
+## All network syscalls making or recieving network connections (51)
+
+- -a always,exit -F arch=b64 -S accept -F key=network
+- -a always,exit -F arch=b64 -S bind -F key=network
+- -a always,exit -F arch=b64 -S connect -F key=network
+- -a always,exit -F arch=b64 -S listen -F key=network
+
+#--------------------------------------------------------------------
+#                       Process activity
+#--------------------------------------------------------------------
+
+## If you are on a 64 bit platform, everything _should_ be running
+## in 64 bit mode. This rule will detect any use of the 32 bit syscalls
+## because this might be a sign of someone exploiting a hole in the 32
+## bit API.
+
+- -a always,exit -F arch=b32 -S all -F key=32bit-API
+
+# All process and command execution
+- -a always,exit -F arch=b64 -S execve -F key=process
+- -a always,exit -F arch=b64 -S execveat -F key=process
+
+#Lastly
+#- -e 1
