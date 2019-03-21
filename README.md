@@ -3,11 +3,11 @@
 
 ### Primary data pipelines for intrusion detection, security analytics and threat hunting
 
-These files contain configuration for producing EDR (endpoint detection and response) data in addition to standard system logs. These configurations enable the production of these data streams using F/OSS (free and / or open source_ tooling. The FOSS tools consist of Auditd for Linux; Sysmon for Windows and Xnumon for the Mac. 
+These files contain configuration for producing EDR (endpoint detection and response) data in addition to standard system logs. These configurations enable the production of these data streams using F/OSS (free and / or open source tooling. The F/OSS tools consist of Auditd for Linux; Sysmon for Windows and Xnumon for the Mac. Also inlcuded is a set of notes for configuring Suricata events and rules.
 
-These data sets enumerate and  / or generate the kinds of security relevant events that are required by threat hunting techniques and a wide variety of security analytics. Also inlcuded is a set of notes for configuring Suricata events and rules.
+These data sets enumerate and  / or generate the kinds of security relevant events that are required by threat hunting techniques and a wide variety of security analytics. 
 
-Tylium is part of the SpaceCake project for doing multi=platform intrusion detection, security analytics and threat hunting using open source tools for Linux and Windows in both cloud and conventional environments. 
+Tylium is part of the SpaceCake project for doing multi-platform intrusion detection, security analytics and threat hunting using open source tools for Linux and Windows in both cloud and conventional environments. 
 
 ### Contents:
 
