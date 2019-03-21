@@ -2,7 +2,7 @@
 # Tylium
 ### Primary event and log data mining pipelines for intrusion detection, security analytics and threat hunting
 
-These data sets enumerate and  / or generate the security relevant events that are required by the  threat hunting and detection analytic techniques. Tylium is part of the SpaceCake project for doing intrusion detection, security analytics and threat hunting using open source tools. 
+These data sets enumerate and  / or generate the security relevant events that are required by the  threat hunting intrusion detection and security analytics techniques. Tylium is part of the SpaceCake project for doing intrusion detection, security analytics and threat hunting using open source tools. 
 
 ### Contents:
 
