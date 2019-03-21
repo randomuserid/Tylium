@@ -1,0 +1,105 @@
+<!-- Reference to the logs below https://technet.microsoft.com/en-us/sysinternals/sysmon
+https://docs.microsoft.com/en-us/sysinternals/downloads/sysmon
+ -->
+<Sysmon schemaversion="4">
+
+<EventFiltering>
+ 
+ <!-- Event ID 1: Process creation -->
+ 
+<ProcessCreate onmatch="exclude">
+		</ProcessCreate>
+ 
+<!-- Event ID 2: A process changed a file creation time -->
+
+<FileCreateTime onmatch="exclude">
+			<Image condition="image">TrustedInstaller.exe</Image> 
+			<Image condition="image">OneDrive.exe</Image> 
+			<Image condition="image">chrome.exe</Image> 
+			<Image condition="image">C:\WINDOWS\system32\backgroundTaskHost.exe</Image> 
+			<Image condition="contains">setup</Image> 
+		</FileCreateTime>
+ 
+<!-- Event ID 3: Network Connection -->
+ 
+<NetworkConnect onmatch="exclude">
+	<DestinationIp condition="contains">255.255.</DestinationIp> 
+	<DestinationIp condition="contains">239.255.</DestinationIp> 
+	<DestinationIp condition="contains">127.0.</DestinationIp> 
+	<DestinationIp condition="contains">0:0:0</DestinationIp> 
+	</NetworkConnect>
+		
+<!-- Event ID 5: Process terminated -->
+
+	<ProcessTerminate onmatch="include">
+<Image condition="image">amazon-ssm-agent.exe</Image>
+<Image condition="image">dockerd.exe</Image>
+<Image condition="image">LiteAgent.exe</Image>
+<Image condition="image">MsMpEng.exe</Image> 
+<Image condition="image">NisSrv.exe</Image>
+<Image condition="image">NortonSecurity.exe</Image>
+<Image condition="image">Sysmon.exe</Image>
+<Image condition="image">winlogbeat.exe</Image>
+	 </ProcessTerminate>
+  
+<!-- Event ID: 6 Driver Loaded -->
+ 
+<DriverLoad onmatch="exclude">
+	<Signature condition="contains">microsoft</Signature>
+	<Signature condition="contains">windows</Signature>
+</DriverLoad>
+ 
+<!--Event ID 7: Image loaded -->
+
+		<ImageLoad onmatch="include">
+			<Signed condition="is">false</Signed>
+			<SignatureStatus condition="is">Invalid</SignatureStatus> 
+			<SignatureStatus condition="is">Unavailable</SignatureStatus> 
+			<ImageLoaded condition="contains">\Temp\</ImageLoaded>
+		</ImageLoad>
+ 
+<!-- Event ID 8: CreateRemoteThread -->
+ 
+<CreateRemoteThread onmatch="include"> 
+     <TargetImage condition="image">lsass.exe</TargetImage> 
+	 <TargetImage condition="image">winlogon.exe</TargetImage>
+	 <TargetImage condition="contains">LoadLibrary</TargetImage>
+	<SourceImage condition="contains">\</SourceImage>
+  </CreateRemoteThread >
+  
+<!-- Event ID 9 RawAccessRead -->
+<!-- Use only on DCs. Events are supernumerary -->
+
+<!-- Event ID 10: ProcessAccess -->
+<!-- Events are supernumerary. -->
+ 
+<!-- Event ID 11 FileCreate -->
+
+		<FileCreate onmatch="include">
+			<TargetFilename condition="begin with">C:\Windows\Prefetch</TargetFilename>
+			<TargetFilename condition="begin with">C:\Windows\winsxs\</TargetFilename> 
+			<TargetFilename condition="begin with">C:\Windows\System32\</TargetFilename> 
+			<TargetFilename condition="begin with">C:\Windows\System32\drivers</TargetFilename> 
+	</FileCreate>
+ 
+<!-- Event ID 12: RegistryEvent -->
+ 
+<RegistryEvent onmatch="include">
+<TargetObject condition="contains">Windows\CurrentVersion\Run</TargetObject>
+<TargetObject condition="contains">Windows\CurrentVersion\Image File Execution Options</TargetObject>
+<TargetObject condition="contains">CurrentControlSet\Services</TargetObject>
+<TargetObject condition="contains">Microsoft\Windows NT\CurrentVersion\Winlogon</TargetObject>
+<TargetObject condition="contains">Microsoft\Windows\CurrentVersion\Policies\Explorer</TargetObject>
+<TargetObject condition="contains">Microsoft\Windows\CurrentVersion\RunOnce</TargetObject>
+<TargetObject condition="contains">System\CurrentControlSet\Services\Tcpip\parameters</TargetObject>
+</RegistryEvent>
+
+<!-- Event ID: 15 FileCreateStreamHash  Events -->
+
+<!-- Event ID 19-21: WmiEvent -->
+	
+		<WmiEvent onmatch="exclude">
+		</WmiEvent>
+		
+</EventFiltering>
+</Sysmon>

@@ -1,0 +1,165 @@
+## First rule - delete all
+- -D
+
+#Contents:
+
+#Configuration
+#File activity
+#Network activity
+#Process activity
+#Suspicious activity
+
+#--------------------------------------------------------------------
+#                       Configuration
+#--------------------------------------------------------------------
+
+## Things that could affect time
+- -a always,exit -F arch=b32 -S adjtimex,settimeofday,stime -F key=time-change
+- -a always,exit -F arch=b64 -S adjtimex,settimeofday -F key=time-change
+- -a always,exit -F arch=b32 -S clock_settime -F a0=0x0 -F key=time-change
+- -a always,exit -F arch=b64 -S clock_settime -F a0=0x0 -F key=time-change
+- -w /etc/localtime -p wa -k time-change
+
+## Things that could affect system locale
+- -a always,exit -F arch=b32 -S sethostname,setdomainname -F key=system-locale
+- -a always,exit -F arch=b64 -S sethostname,setdomainname -F key=system-locale
+- -w /etc/issue -p wa -k system-locale
+- -w /etc/issue.net -p wa -k system-locale
+- -w /etc/hosts -p wa -k system-locale
+- -w /etc/hostname -p wa -k system-locale
+
+#- -w /etc/sysconfig/network -p wa -k system-locale
+- -a always,exit -F dir=/etc/NetworkManager/ -F perm=wa -F key=system-locale
+
+## Modprobe configuration
+-w /etc/modprobe.conf -p wa -k modprobe
+
+## Stunnel
+-w /usr/sbin/stunnel -p x -k stunnel
+
+## watch for containers that may change their configuration
+- -a always,exit -F arch=b32 -S unshare,setns -F key=container-config
+- -a always,exit -F arch=b64 -S unshare,setns -F key=container-config
+
+#--------------------------------------------------------------------
+#                       File activity
+#--------------------------------------------------------------------
+
+# Configure if using SElinux
+#- -w /etc/selinux -p wa -k selinux-changes
+
+#Configure with the location of auditd or go-audit dirs
+#- -w /var/log/audit/ -k audit-logs
+
+## User changes
+- -w /etc/group -p wa -k auth-changes
+- -w /etc/passwd -p wa -k auth-changes
+- -w /etc/gshadow -p wa -k auth-changes
+- -w /etc/shadow -p wa -k auth-changes
+- -w /etc/security/opasswd -p wa -k auth-changes
+
+## Sudoers file changes
+-w /etc/sudoers -p wa -k actions
+
+## Passwd mods
+-w /usr/bin/passwd -p x -k passwd_modification
+
+## Cron configuration & scheduled jobs
+-w /etc/cron.allow -p wa -k cron
+-w /etc/cron.deny -p wa -k cron
+-w /etc/cron.d/ -p wa -k cron
+-w /etc/cron.daily/ -p wa -k cron
+-w /etc/cron.hourly/ -p wa -k cron
+-w /etc/cron.monthly/ -p wa -k cron
+-w /etc/cron.weekly/ -p wa -k cron
+-w /etc/crontab -p wa -k cron
+-w /var/spool/cron/crontabs/ -k cron
+
+## unsuccessful creation
+- -a always,exit -F arch=b32 -S creat,link,mknod,mkdir,symlink,mknodat,linkat,symlinkat -F exit=-EACCES -F key=creation
+- -a always,exit -F arch=b64 -S mkdir,creat,link,symlink,mknod,mknodat,linkat,symlinkat -F exit=-EACCES -F key=creation
+- -a always,exit -F arch=b32 -S link,mkdir,symlink,mkdirat -F exit=-EPERM -F key=creation
+- -a always,exit -F arch=b64 -S mkdir,link,symlink,mkdirat -F exit=-EPERM -F key=creation
+
+## unsuccessful open
+- -a always,exit -F arch=b32 -S open,openat,open_by_handle_at -F exit=-EACCES -F key=open
+- -a always,exit -F arch=b64 -S open,openat,open_by_handle_at -F exit=-EACCES -F key=open
+- -a always,exit -F arch=b32 -S open,openat,open_by_handle_at -F exit=-EPERM -F key=open
+- -a always,exit -F arch=b64 -S open,openat,open_by_handle_at -F exit=-EPERM -F key=open
+
+## unsuccessful close
+- -a always,exit -F arch=b32 -S close -F exit=-EIO -F key=close
+- -a always,exit -F arch=b64 -S close -F exit=-EIO -F key=close
+
+## unsuccessful modifications
+- -a always,exit -F arch=b32 -S rename -S renameat -S truncate -S chmod -S setxattr -S lsetxattr -S removexattr -S lremovexattr -F exit=-EACCES -F key=mods
+- -a always,exit -F arch=b64 -S rename -S renameat -S truncate -S chmod -S setxattr -S lsetxattr -S removexattr -S lremovexattr -F exit=-EACCES -F key=mods
+- -a always,exit -F arch=b32 -S rename -S renameat -S truncate -S chmod -S setxattr -S lsetxattr -S removexattr -S lremovexattr -F exit=-EPERM -F key=mods
+- -a always,exit -F arch=b64 -S rename -S renameat -S truncate -S chmod -S setxattr -S lsetxattr -S removexattr -S lremovexattr -F exit=-EPERM -F key=mods
+
+## unsuccessful deletion
+- -a always,exit -F arch=b32 -S unlink,rmdir,unlinkat -F exit=-EACCES -F key=delete
+- -a always,exit -F arch=b64 -S rmdir,unlink,unlinkat -F exit=-EACCES -F key=delete
+- -a always,exit -F arch=b32 -S unlink,rmdir,unlinkat -F exit=-EPERM -F key=delete
+- -a always,exit -F arch=b64 -S rmdir,unlink,unlinkat -F exit=-EPERM -F key=delete
+
+#--------------------------------------------------------------------
+#                       Network activity
+#--------------------------------------------------------------------
+
+## All network syscalls making or recieving network connections
+
+- -a always,exit -F arch=b64 -S accept,bind,connect,listen -F key=network
+##- -a always,exit -F arch=b32 -S accept,bind,connect,listen -F key=network
+
+#--------------------------------------------------------------------
+#                       Process activity
+#--------------------------------------------------------------------
+
+## If you are on a 64 bit platform, everything _should_ be running
+## in 64 bit mode. This rule will detect any use of the 32 bit syscalls
+## because this might be a sign of someone exploiting a hole in the 32
+## bit API.
+- -a always,exit -F arch=b32 -S all -F key=32bit-abi
+
+# All process and command execution
+- -a exit,always -F arch=b64 -S execve,execveat -F
+
+#--------------------------------------------------------------------
+#                       Suspicious activity
+#--------------------------------------------------------------------
+
+## An admin may be rooting around
+- -a always,exit -F dir=/home -F uid=0 -F auid>=1000 -F auid!=4294967295 -C auid!=obj_uid -F key=root
+
+## Ptrace code injection - could be suspicious or just debugging
+
+#-a always,exit -F arch=b32 -S ptrace -F key=tracing
+- -a always,exit -F arch=b32 -S ptrace -F a0=0x4 -F key=code-injection
+- -a always,exit -F arch=b64 -S ptrace -F a0=0x4 -F key=code-injection
+- -a always,exit -F arch=b32 -S ptrace -F a0=0x5 -F key=data-injection
+- -a always,exit -F arch=b64 -S ptrace -F a0=0x5 -F key=data-injection
+- -a always,exit -F arch=b32 -S ptrace -F a0=0x6 -F key=register-injection
+- -a always,exit -F arch=b64 -S ptrace -F a0=0x6 -F key=register-injection
+- -a always,exit -F arch=b64 -S ptrace -F key=tracing
+
+## These rules watch for kernel module insertion
+- -w /sbin/kmod -p x -k modules
+- -w /sbin/insmod -p x -k modules
+- -w /sbin/rmmod -p x -k modules
+- -w /sbin/modprobe -p x -k modules
+- -a always,exit -F arch=b32 -S init_module,finit_module -F key=module-load
+- -a always,exit -F arch=b64 -S init_module,finit_module -F key=module-load
+- -a always,exit -F arch=b32 -S delete_module -F key=module-unload
+- -a always,exit -F arch=b64 -S delete_module -F key=module-unload
+
+## These are rules are to locate poorly written programs.
+## Its never planned to waste time on a syscall with incorrect parameters
+## This is more of a debugging step than something people should run with
+## in production.
+- -a never,exit -F arch=b64 -S rt_sigreturn
+- -a always,exit -S all -F exit=-EINVAL -F key=einval-retcode
+
+#Lastly
+
+- -e 1
