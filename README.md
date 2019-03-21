@@ -1,7 +1,6 @@
 
-![Carrelon](/img/120px-BattleofCarillon.jpg?raw=true "Tylium") ### Tylium
-
-
+![Carrelon](/img/120px-BattleofCarillon.jpg?raw=true "text") 
+### Markdown
 
 You can use the [editor on GitHub](https://github.com/randomuserid/tylium/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
