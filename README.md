@@ -19,11 +19,11 @@ SystemLogs.md - a matrix of Linux native operating system and web server logs
 
 ### MacOS
 
-configuration.plist - a configuration for generating sysmon-like events using the xnumon project on the MacOS.
+configuration.plist - a configuration for generating sysmon-like events using the xnumon project on the MacOS
 
 ### Suricata
 
-Notes on event and rule setup for Suricata in cloud vs. terrestrial envioronments
+Notes on event and rule setup for Suricata in cloud vs. terrestrial environmentals
 
 ### Windows
 
