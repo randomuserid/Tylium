@@ -8,7 +8,7 @@ These data sets enumerate and  / or generate the security relevant events that a
 
 ### Linux
 
-Auditd.yaml - a set of auditd rules for generating interesting file, network and process events via the auditd susbsystem for Linux
+auditd.yaml - a set of auditd rules for generating interesting file, network and process events via the auditd susbsystem for Linux
 
 SystemLogs.md - a matrix of Linux native operating system and web server logs
 
