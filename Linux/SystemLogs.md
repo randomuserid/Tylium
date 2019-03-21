@@ -1,14 +1,14 @@
-| Apache          | /var/log/httpd/access_log       | HTTP request logs                                    |
+| Type            | Path                            | Description                                          |
 |-----------------|---------------------------------|------------------------------------------------------|
-| Apache          | /var/log/httpd/error_log        | HTTP error logs                                      |
 |                 |                                 |                                                      |
+| Apache          | /var/log/httpd/access_log       | HTTP request logs                                    |
+| Apache          | /var/log/httpd/error_log        | HTTP error logs                                      |
 | Nginx           | /var/log/nginx/access.log       | HTTP request logs                                    |
 | Nginx           | /var/log/nginx/error.log        | HTTP error logs                                      |
-|                 |                                 |                                                      |
 | Tomcat          | /var/log/tomcat/catalina.out    | Request logs                                         |
+|                 |                                 |                                                      |
 | MySQL (Red Hat) | /var/log/mysqld.log             | Database logs                                        |
 | MySQL (Ubuntu)  | /var/log/mysql.log              | Database logs                                        |
-|                 |                                 |                                                      |
 |                 |                                 |                                                      |
 | Red Hat         | /var/log/boot.log               | System boot logs                                     |
 | Red Hat         | /var/log/cloud-init.log         | AWS                                                  |
