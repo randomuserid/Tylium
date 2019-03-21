@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<!--
+
+    Do not change this default configuration!
+
+    Instead, install a modified copy of this configuration to
+    /Library/Application Support/ch.roe.xnumon/configuration.plist
+    and make sure to change the value of config_id accordingly.
+
+-->
+<dict>
+
+  <!-- Config ID:
+       String that identifies this configuration revision in an enterprise
+       deployment.  Change this when modifying the configuration in order to
+       verify the deployment of configs via xnumon-ops[0] events.
+       Good practice is to use your org name with a date or commit id, but
+       there are no expectations with regards to the syntax of this string.
+       If unset, defaults to:   unset
+       -->
+  <key>config_id</key>
+  <string>default-__BUILD_VERSION__</string>
+
+
+  <!-- LOG FORMAT AND DESTINATION -->
+
+  <!-- Log format:
+       json         JSON objects separated by newlines.  Equivalent to JSON
+                    Lines format if used in oneline mode.
+       json-seq     RFC 7464 JSON text sequence format.  JSON objects are each
+                    prefixed by an ASCII Record Separator and terminated by an
+                    ASCII Line Feed character.
+       yaml         YAML documents.  Only supports multiline mode.
+       xml          XML objects separated by newlines, without root element or
+                    XML declaration, i.e. not well-formed XML.
+       If unset, defaults to:   json
+       -->
+  <key>log_format</key>
+  <string>json</string>
+
+  <!-- Log destination:
+       syslog       Submit events to syslog(3).  Only supports oneline mode.
+       -            Write events to standard output.
+       <file>       Write events to a file.
+       If unset, defaults to:   - (standard output)
+       -->
+  <key>log_destination</key>
+  <string>/var/log/xnumon.log</string>
+
+  <!-- Log mode:
+       oneline      One line per event.
+       multiline    Multiple lines per event, indented where applicable.
+       If unset, defaults to:   multiline iff log_destination is - and stdout
+                                is a TTY, otherwise oneline.
+       -->
+  <!--
+  <key>log_mode</key>
+  <string>oneline</string>
+  <string>multiline</string>
+  -->
+
+
+  <!-- EVENTS -->
+
+  <!-- Events:
+       The events that should be produced.  Available eventcodes are:
+       0 * xnumon-ops       agent start and stop, with active configuration
+       1 * xnumon-stats     agent metrics for in-band health monitoring
+       2 * image-exec       a process executed an executable image
+       3 * process-access   a process has accessed another process using
+                            task_for_pid or ptrace
+       4   launchd-add      a process has added or modified a Launch Agent or
+                            Launch Daemon plist; incurs file close audit load
+       The agent will only monitor the audit events that are needed to produce
+       the selected events.  Disabling events that use hotter audit events is
+       one way to reduce load.  The events marked with * are recommended to
+       keep enabled, disabling them does not result in a significant reduction
+       of load.
+       If unset, defaults to:   0,1,2,3,4
+       -->
+
+  <key>events</key>
+  <string>0,1,2,3,4</string>
+
+
+  <!-- Stats interval:
+       Generate a xnumon-stats[1] event with operational metrics every this
+       many seconds.
+       If unset, defaults to:   3600
+       -->
+
+  <key>stats_interval</key>
+  <string>3600</string>
+
+
+
+  <!-- DATA ACQUISITION -->
+
+  <!-- Kernel extension level:
+       0 none       Do not use kernel extension.  Processes may execute without
+                    any delay, but acquisition of images may fail for processes
+                    writing to or unlinking their executable image on disk,
+                    resulting in log events without hashes or code signatures.
+                    While care has been taken to avoid acquiring wrong hashes
+                    or code signatures, there is still a race condition that
+                    cannot be avoided without kernel help.  If an executable
+                    modifies its executable image after exec, before xnumon
+                    receives and processes the audit event and stats the image,
+                    then the acquired hash and code signature will be different
+                    from the one actually activated during exec.
+       1 open       Synchroniously open and stat executable image before the
+                    process is allowed to execute in the new image.
+                    This incurs only a minimal delay before the new process may
+                    execute, but processes writing to their own exec image may
+                    cause subsequent hashes and code signature acquisition to
+                    fail, resulting in log events without hashes or code
+                    signatures.  The acquired hashes and code signature
+                    information can never be wrong, only missing.  Processes
+                    unlinking but not modifying their own executable image on
+                    disk will have hashes acquired successfully.
+       2 hashes     Synchroniously acquire hashes of the executable image
+                    before the process is allowed to execute in the new image.
+                    Incurs a delay of a few milliseconds depending on image
+                    size, but ensures we have hashes for all exec images.  For
+                    processes modifying or unlinking their own image on disk,
+                    the subsequent acquisition of code signature information
+                    may fail, resulting in log events without code signatures.
+                    The acquired code signature information can never be wrong,
+                    only missing.  The delay for hash acquisition is minimal if
+                    hashes for the same binary have been cached from a previous
+                    execution.
+       3 codesign   Synchroniously acquire hashes and code signature info
+                    before the process is allowed to execute in the new image.
+                    Incurs a significant delay of tens of milliseconds for very
+                    small executable images up to hundreds of microseconds for
+                    large app bundles, sometimes even seconds (!), but ensures
+                    we have both hashes and code signature information for all
+                    executed image files.  The delay for hash and code
+                    signature info acquisition is minimal if hashes and code
+                    signature info for the same binary have been cached from a
+                    previous execution.
+                    NOT RECOMMENDED FOR USE IN PRODUCTION ENVIRONMENTS.
+       If unset, defaults to:   hash
+       -->
+  <!--
+  <key>kextlevel</key>
+  <string>none</string>
+  <string>open</string>
+  <string>hash</string>
+  <string>codesign</string>
+  -->
+
+  <!-- Hashes:
+       Comma-separated list of hash algorithms to use when acquiring hashes of
+       executable images on disk.  Supported are md5, sha1 and sha256, or any
+       combinations thereof, such as md5,sha1,sha256.  More hashes result in
+       longer acquisition time and higher CPU use, but not more I/O, since the
+       hashes are calculated in a single I/O loop.  The difference is
+       insignificant for smaller executables.
+       If unset, defaults to:   sha256
+       -->
+  <!--
+  <key>hashes</key>
+  <string>sha256</string>
+  -->
+
+  <!-- Code signature information:
+       Enable (<true/>) or disable (<false/>) the acquisition of code signature
+       information from executed files, including the signature status, origin,
+       CDHash, ident string, team ID and certificate CN.
+       If this is false, suppression rules by ident will not have any effect.
+       If unset, defaults to:   true
+       -->
+  <!--
+  <key>codesign</key>
+  <true/>
+  <false/>
+  -->
+
+  <!-- Environment level:
+       0 none       Do not include the environment in eventcode 2 events.
+       1 dyld       Only include DYLD_* environment variables in eventcode 2
+                    events.  These influence the operation of the dynamic
+                    linker and can be used to inject libraries into a process.
+       2 full       Include the full environment in eventcode 2 events.
+       When using envlevel dyld or full, xnumon will set the arge policy flag
+       at runtime.  The default configuration of auditd does not include the
+       arge policy flag.  It is recommended to either disable auditd or to
+       enable the arge policy flag in /etc/security/audit_control, so that
+       auditd does not clobber the global audit policy at runtime.
+       If unset, defaults to:   dyld
+       -->
+  <!--
+  <key>envlevel</key>
+  <string>none</string>
+  <string>dyld</string>
+  <string>full</string>
+  -->
+
+  <!-- Resolve users and groups
+       Enable (<true/>) or disable (<false/>) the acquisition of user and group
+       names from numerical user and group IDs using getpwuid() and getgrgid(),
+       respectively.
+       If unset, defaults to:   true
+       -->
+  <!--
+  <key>resolve_users_groups</key>
+  <true/>
+  <false/>
+  -->
+
+
+  <!-- LEVEL OF DETAIL -->
+
+  <!-- Omit specific fields:
+       If enabled (<true/>), omit the respective field from the produced log
+       events.  The following fields can be omitted:
+       omit_mode        mode field of images
+       omit_size        size field of images
+       omit_mtime       mtime field of images
+       omit_ctime       ctime field of images
+       omit_btime       btime field of images
+       omit_sid         sid field of processes
+       omit_groups      gid field of processes, egid and rgid of images
+       If unset, defaults to:   false
+       -->
+  <!--
+  <key>omit_mode</key>
+  <true/>
+  <false/>
+  <key>omit_size</key>
+  <true/>
+  <false/>
+  <key>omit_mtime</key>
+  <true/>
+  <false/>
+  <key>omit_ctime</key>
+  <true/>
+  <false/>
+  <key>omit_btime</key>
+  <true/>
+  <false/>
+  <key>omit_sid</key>
+  <true/>
+  <false/>
+  <key>omit_groups</key>
+  <true/>
+  <false/>
+  -->
+
+  <!-- Omit Apple hashes:
+       If enabled (<true/>), omit executable image hashes for verified Apple
+       binaries (i.e. origin="system") in the image node of eventcode 2 events
+       and in subject image and ancestors for all events.
+       If disabled (<false/>), always include hashes, even for Apple-signed
+       binaries.
+       The idea is that for Apple-signed binaries, the ident string serves the
+       purpose of identifying a binary well enough, even though the hashes will
+       differ across different patchlevels and releases.
+       Only has an effect if codesign is true.  When code signatures are not
+       acquired, then no binaries will be identified as Apple binaries, and
+       hence hashes will be included for all executable images.
+       If unset, defaults to:   true
+       -->
+  <!--
+  <key>omit_apple_hashes</key>
+  <true/>
+  <false/>
+  -->
+
+  <!-- Ancestors:
+       Number of images to list in subject ancestry, and to remember in memory
+       for each active process.  The current image of processes is always
+       shown, independently of this setting.
+       If unset, defaults to:   unlimited
+       -->
+  <!--
+  <key>ancestors</key>
+  <string>unlimited</string>
+  -->
+
+
+  <!-- SUPPRESSIONS -->
+
+  <!-- Suppress image exec events at start:
+       If enabled (<true/>), suppress image exec events for processes that were
+       already running at the time xnumon started.  If disabled (<false/>),
+       produce image exec events for already running processes in order to
+       produce a complete view on all processes.  These events are logged
+       before the xnumon start event is produced; the xnumon start event always
+       marks the beginning of normal operation.  Image execution events that
+       were acquired from live running processes instead of audit or kext
+       events are marked with an additional "reconstructed" field.  For each
+       process forked off the same image execution, a separate image execution
+       event is produced, because these are not easily distringuishable.
+       Note that setting this option to <false/> also means that when xnumon
+       restarts, for example to load a configuration change, as a result of
+       manual unloading/loading of the launchd plist or because the kext kills
+       the userspace daemon due to having become unresponsive, an image exec
+       event will be logged for every running process.  The process images will
+       be acquired in any case in order to provide context for later events,
+       this option only controls the logging.
+       Reconstructed image execution events can also be (very rarely) caused by
+       dropped audit events; this option does not affect those.
+       Because of the limited value and quality of reconstructed image
+       execution events, disabling this suppression is not recommended.
+       If unset, defaults to:   true
+       -->
+  <!--
+  <key>suppress_image_exec_at_start</key>
+  <true/>
+  <false/>
+  -->
+
+  <!-- Suppress exec image events by ident:
+       Execution of images whose good code signature ident strings matches this
+       list will not generate image-exec[3] events.
+       Non-Apple identifiers in this list can be restricted to a team ID by
+       postfixing an @ and the team ID, e.g. ch.roe.xnumon@C9BFEG985N only
+       matches the ident ch.roe.xnumon if the signing team ID is C9BFEG985N.
+       In order to not lose relationship information, it is recommended to not
+       disable ancestors completely when suppressing image exec events.
+       This requires codesign to be enabled.  If codesign is false, suppression
+       by ident is disabled.
+       Generally, we want to suppress exec events for binaries that execute
+       often, but don't add any significant information.
+       If unset, defaults to:   no suppressions
+       -->
+  <key>suppress_image_exec_by_ident</key>
+  <array>
+    <string>com.apple.xpc.proxy</string>
+    <string>com.apple.mdworker</string>
+    <string>com.apple.mdworker32</string>
+  </array>
+
+  <!-- Suppress exec image events by path:
+       Execution of images whose image path or script path matches this list
+       will not generate image-exec[3] events.
+       In order to not lose relationship information, it is recommended to not
+       disable ancestors completely when suppressing image exec events.
+       It is generally preferable to suppress by ident instead, unless the
+       binaries to suppress are unsigned or codesign is disabled.
+       Generally, we want to suppress exec events for binaries that execute
+       often, but don't add any significant information.
+       If unset, defaults to:   no suppressions
+       -->
+  <key>suppress_image_exec_by_path</key>
+  <array>
+  <!--
+    <string>/usr/libexec/xpcproxy</string>
+    <string>/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker</string>
+    <string>/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/Metadata.framework/Versions/A/Support/mdworker32</string>
+    -->
+    <string>/Applications/Splunk/bin/splunk-optimize</string>
+  </array>
+
+  <!-- Suppress exec image events by ancestor ident:
+       Execution of child images of images whose good code signature ident
+       strings match this list will not generate image-exec[3] events.
+       Non-Apple identifiers in this list can be restricted to a team ID by
+       postfixing an @ and the team ID, e.g. ch.roe.xnumon@C9BFEG985N only
+       matches the ident ch.roe.xnumon if the signing team ID is C9BFEG985N.
+       This requires codesign to be enabled.  If codesign is false, suppression
+       by ident is disabled.
+       This suppression type is suitable for suppressing things like MacPorts,
+       that spawn many subprocesses when doing their thing.
+       If unset, defaults to:   no suppressions
+       -->
+  <key>suppress_image_exec_by_ancestor_ident</key>
+  <array>
+  </array>
+
+  <!-- Suppress exec image events by ancestor path:
+       Execution of child images of images whose image path or script path
+       match this list will not generate image-exec[3] events.
+       It is generally preferable to suppress by ident instead, unless the
+       binaries to suppress are unsigned or codesign is disabled.
+       This suppression type is suitable for suppressing things like MacPorts,
+       that spawn many subprocesses when doing their thing.
+       If unset, defaults to:   no suppressions
+       -->
+  <key>suppress_image_exec_by_ancestor_path</key>
+  <array>
+    <string>/opt/local/bin/port</string>
+  </array>
+
+  <!-- Suppress process access events by subject ident:
+       Subjects with code signing ident strings matching this list will be
+       excluded from logging process-access[4] events when they access other
+       processes.
+       Non-Apple identifiers in this list can be restricted to a team ID by
+       postfixing an @ and the team ID, e.g. ch.roe.xnumon@C9BFEG985N only
+       matches the ident ch.roe.xnumon if the signing team ID is C9BFEG985N.
+       This requires codesign to be enabled.  If codesign is false, suppression
+       by ident is disabled.
+       Generally, we want to suppress process access events from binaries which
+       legitimately access other processes, generating high volumes of events.
+       If unset, defaults to:   no suppressions
+       -->
+  <key>suppress_process_access_by_subject_ident</key>
+  <array>
+    <string>com.apple.coreservicesd</string>
+    <string>com.apple.spindump</string>
+    <string>com.apple.sysmond</string>
+    <string>com.apple.ps</string>
+  </array>
+
+  <!-- Suppress process access events by subject path:
+       Subject processes with executable image paths matching this list will be
+       excluded from logging process-access[4] events when they access other
+       processes.
+       It is generally preferable to suppress by ident instead, unless the
+       binaries to suppress are unsigned or codesign is disabled.
+       Generally, we want to suppress process access events from binaries which
+       legitimately access other processes, generating high volumes of events.
+       If unset, defaults to:   no suppressions
+       -->
+  <key>suppress_process_access_by_subject_path</key>
+  <array>
+    <!--
+    <string>/System/Library/Frameworks/CoreServices.framework/Versions/A/Frameworks/CarbonCore.framework/Versions/A/Support/coreservicesd</string>
+    <string>/usr/sbin/spindump</string>
+    <string>/usr/libexec/sysmond</string>
+    <string>/bin/ps</string>
+    -->
+  </array>
+
+
+  <!-- MISCELLANEOUS -->
+
+  <!-- Number of open files resource limit:
+       Maximum number of open files that the operating system allows xnumon to
+       open before opening more files will fail.  For kextlevel open, the
+       limit needs to be large enough to fit the queue of processes that have
+       called exec, but have not been logged by xnumon yet.  Additionally, upon
+       starting xnumon, all currently running processes will be added to the
+       queue at once.  The default should be sufficient for all configurations,
+       but increase it if xnumon fails to open files with EMFILE.
+       If unset, defaults to:   8192
+       -->
+  <!--
+  <key>rlimit_nofile</key>
+  <string>8192</string>
+  -->
+
+  <!-- Debug:
+       Enable (<true/>) or disable (<false/>) printing of debug information to
+       stderr.  When disabled, error conditions are only counted via metrics in
+       eventcode 1 and on SIGINFO.  When enabled, counted events also get
+       documented on stderr with context information.  To actually see the
+       debug messages, configure the launchd plist for xnumon to log stderr to
+       a file or run xnumon manually from the command line.
+       If unset, defaults to:   false
+       -->
+  <!--
+  <key>debug</key>
+  <true/>
+  <false/>
+  -->
+
+</dict>
+</plist>
