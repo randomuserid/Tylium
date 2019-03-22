@@ -1,4 +1,4 @@
-![Carrelon](/img/120px-BattleofCarillon.jpg?raw=true "text")
+![Carrelon](/img/300px-HandofGod.jpg?raw=true "text")
 # Tylium
 
 ### Primary data pipelines for intrusion detection, security analytics and threat hunting
