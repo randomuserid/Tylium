@@ -3,7 +3,7 @@
 
 ### Primary data pipelines for intrusion detection, security analytics and threat hunting
 
-These files contain configuration for producing EDR (endpoint detection and response) data in addition to standard system logs. These configurations enable the production of these data streams using F/OSS (free and / or open source tooling.) The F/OSS tools consist of Auditd for Linux; Sysmon for Windows and Xnumon for the Mac. Also inlcuded is a set of notes for configuring Suricata events and rules.
+These files contain configuration for producing EDR (endpoint detection and response) data in addition to standard system logs. These configurations enable the production of these data streams using F/OSS (free and / or open source tooling.) The F/OSS tools consist of Auditd for Linux; Sysmon for Windows and Xnumon for the Mac. Also included is a set of notes for configuring Suricata events and rules.
 
 These data sets enumerate and  / or generate the kinds of security relevant events that are required by threat hunting techniques and a wide variety of security analytics. 
 
