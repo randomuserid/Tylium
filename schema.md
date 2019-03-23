@@ -1,4 +1,4 @@
-Spacecake Schema - copyright (c) 2018 - 2019 Project SpaceCake. All rights reserved. Not licensed for use by anyone or anything.
+SpaceCake Schema - copyright (c) 2018 - 2019 Project SpaceCake. All rights reserved. Not licensed for use by anyone or anything. The first 10k SIDs are reserved. SIDs 11000 - 20999 map to the ATT&CK categories. The 40k range reserved for behavioral detection techniques which produce nondeteministic detects in many different ATT&CK categories including Execution, Persistence, Lateral Movement, Exfiltration, Command and Control. the 40k range is reserved for multivariate correlation and the 50k range for machine learning (primarily using the significant terms operator to do entity-relationship anomaly detection.) Each range is subdivided by data pipeline to enable selection according to data pipelines (if you have no Cloud or Windows events, there is no need to enable these sets of searches and spend compute resources on them.)
 
 | SpaceID (SID) Range Start | End                 | Classification           |               |
 |---------------------------|---------------------|--------------------------|---------------|
