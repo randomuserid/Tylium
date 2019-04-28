@@ -1,180 +1,181 @@
-SpaceCake Schema - copyright (c) 2018 - 2019 Project SpaceCake. All rights reserved. Not licensed for use by anyone or anything. 
+SpaceCake Schema - copyright (c) 2018 - 2019 Project SpaceCake. All rights reserved. Not licensed for use by anyone or anything except the SpaceCake project.
 
-The first 10k SIDs are reserved for future use. The beginning and end of each range are reserved for special use. SIDs 11000 - 20999 map to the ATT&CK categories. The 30k range is reserved for behavioral detection techniques which produce nondeterministic  detects in many different ATT&CK categories including at least Execution, Persistence, Lateral Movement, Exfiltration, and Command and Control. The 40k range is reserved for multivariate correlation and the 50k range for machine learning (primarily using the significant terms operator to do entity-relationship anomaly detection.) 
+The first 10k SIDs are reserved for future use. The beginning and end of each range are reserved for special use. SIDs 10,001 through 119,999 map to the ATT&CK categories. The 200k range is reserved for behavioral detection techniques which produce nondeterministic  detects in many different ATT&CK categories including at least Execution, Persistence, Lateral Movement, Exfiltration, and Command and Control. The 300k range is reserved for multivariate correlation and the 400k range for machine learning jobs. The 1,000,000 range is reserved for local use - for numbering local or organization-specific searches that are not incorporated into the project for whatever reason.
 
-Each range is subdivided by data pipeline to enable selection according to data pipelines (if you have no Cloud or no Mac events, for example, there is no need to enable these sets of searches and spend compute resources on them.) Each child category has room for 98 events and each parent category has room for 998 not counting reserved Space IDs for a total of 13972 which is enough space that renumbering should never be necessary. The machine learning range is last because I expect this set may grow larger than 998 searches in the future, in which case it will be extended above the 50k range (and I reserve the right to do some renumbering above the 50k range if the set of machine learning techniques grows to become really large.) Multivariate correlation and machine learning detects will be decorated with ATT&CK categories whenever possible.
+Each range is subdivided by data pipeline to enable selection according to data pipelines (if you have no Mac events, for example, there is no need to enable these sets of searches and spend compute resources on them.) Each child category has room for 998 events and each parent category has room for 9980 not counting reserved Space IDs for a total of 109,780 which is enough space that renumbering should never be necessary. The ranges for behavioral detection, multivariate correlation and machine learning each have their own distinct range with a very large number space of 99,980 so they have practically unlimited room to grow. These will be decorated with ATT&CK categories whenever the payload or intent is narrow and clear enough to make it feasible and reasonable to confine the search to a particular TTP.
 
-The idea here is to ensure that every event, search result and thing I produce always has a unique identifier. In order to try and make these easy to work with under cognitive load, such as in SOC (security operations center) in a state of critical incident response, the numeric ranges are designed to enable an analyst to quickly know or recognize the type and nature of a threat classification alert and what kind of platform or data pipeline it came from. For example, an alert in the 10-19k range is specification based; the 30k range is behavioral; the 40k range is a correlation and the 50k range is a machine learning result. This is intended to enable accurate decisioning under congintive load conditions and generally help to facilitate velocity. Hunters and analysts often know which kinds of alerts are most actionable in their environment and hopefully these ranges will help velocity by making it easier to look at actionable detects first. 
+The idea here is to ensure that every search or alert has a unique identifier that can be referenced back to a description of what the search is detecting, and so that rules, searches and alerts can be precisely identified in order to reduce ambiguity. Geographically distributed teams, teams under cognitive load, and teams lacking in common languages, are less likely to miscommunicate a numeric search ID than a complex name or phrase. Another objective is make these easy to work with under cognitive load, such as in SOC (security operations center) in a state of critical incident response, the numeric ranges are designed to enable an analyst to quickly know or recognize the type and nature of a threat classification alert and what kind of platform or data pipeline it came from. For example, an alert in the 10-120k range is specification based; the 200k range is behavioral; the 300k range is a correlation and the 400k range is a machine learning result. This is intended to enable accurate decisioning under cognitive load conditions and generally help to facilitate velocity. Hunters and analysts often know which kinds of alerts are most actionable in their environment and hopefully these ranges will help velocity by making it easier to look at actionable detects first.
 
-| SpaceID (SID) Range Start | End                 | Classification           |               |
-|---------------------------|---------------------|--------------------------|---------------|
-| 0                         | 10000               | Reserved                 |               |
-| 10001                     | 10999               | Initial Access           |               |
-| 11001                     | 11999               | Execution                |               |
-| 12001                     | 12999               | Persistence              |               |
-| 13001                     | 13999               | Privliege Escalation     |               |
-| 14001                     | 14999               | Defense Evasion          |               |
-| 15001                     | 15999               | Credential Access        |               |
-| 16001                     | 16999               | Discovery                |               |
-| 17001                     | 17999               | Lateral Movement         |               |
-| 18001                     | 18999               | Collection               |               |
-| 19001                     | 19999               | Exfiltration             |               |
-| 20001                     | 20999               | Command and Control      |               |
-| 30001                     | 30999               | Behavioral Detection     |               |
-| 40001                     | 40999               | Multivariate Correlation |               |
-| 50001                     | 50999               | Machine Learning         |               |
-|                           |                     |                          |               |
-| Category                  | SpaceID (SID) start | SID end                  | Data Pipeline |
-| Initial Access            | 10001               | 10099                    | Auth          |
-| Initial Access            | 10101               | 10199                    | Cloud         |
-| Initial Access            | 10201               | 10299                    | Data Layer    |
-| Initial Access            | 10301               | 10399                    | Linux         |
-| Initial Access            | 10401               | 10499                    | MacOS         |
-| Initial Access            | 10501               | 10599                    | Mobile        |
-| Initial Access            | 10601               | 10699                    | Network       |
-| Initial Access            | 10701               | 10799                    | Other         |
-| Initial Access            | 10801               | 10899                    | Web           |
-| Initial Access            | 10901               | 10999                    | Windows       |
-|                           |                     |                          |               |
-| Execution                 | 11001               | 11099                    | Auth          |
-| Execution                 | 11101               | 11199                    | Cloud         |
-| Execution                 | 11201               | 11299                    | Data Layer    |
-| Execution                 | 11301               | 11399                    | Linux         |
-| Execution                 | 11401               | 11499                    | MacOS         |
-| Execution                 | 11501               | 11599                    | Mobile        |
-| Execution                 | 11601               | 11699                    | Network       |
-| Execution                 | 11701               | 11799                    | Other         |
-| Execution                 | 11801               | 11899                    | Web           |
-| Execution                 | 11901               | 11999                    | Windows       |
-|                           |                     |                          |               |
-| Persistence               | 12001               | 12099                    | Auth          |
-| Persistence               | 12101               | 12199                    | Cloud         |
-| Persistence               | 12201               | 12299                    | Data Layer    |
-| Persistence               | 12301               | 12399                    | Linux         |
-| Persistence               | 12401               | 12499                    | MacOS         |
-| Persistence               | 12501               | 12599                    | Mobile        |
-| Persistence               | 12601               | 12699                    | Network       |
-| Persistence               | 12701               | 12799                    | Other         |
-| Persistence               | 12801               | 12899                    | Web           |
-| Persistence               | 12901               | 12999                    | Windows       |
-|                           |                     |                          |               |
-| Privliege Escalation      | 13001               | 13099                    | Auth          |
-| Privliege Escalation      | 13101               | 13199                    | Cloud         |
-| Privliege Escalation      | 13201               | 13299                    | Data Layer    |
-| Privliege Escalation      | 13301               | 13399                    | Linux         |
-| Privliege Escalation      | 13401               | 13499                    | MacOS         |
-| Privliege Escalation      | 13501               | 13599                    | Mobile        |
-| Privliege Escalation      | 13601               | 13699                    | Network       |
-| Privliege Escalation      | 13701               | 13799                    | Other         |
-| Privliege Escalation      | 13801               | 13899                    | Web           |
-| Privliege Escalation      | 13901               | 13999                    | Windows       |
-|                           |                     |                          |               |
-| Defense Evasion           | 14001               | 14099                    | Auth          |
-| Defense Evasion           | 14101               | 14199                    | Cloud         |
-| Defense Evasion           | 14201               | 14299                    | Data Layer    |
-| Defense Evasion           | 14301               | 14399                    | Linux         |
-| Defense Evasion           | 14401               | 14499                    | MacOS         |
-| Defense Evasion           | 14501               | 14599                    | Mobile        |
-| Defense Evasion           | 14601               | 14699                    | Network       |
-| Defense Evasion           | 14701               | 14799                    | Other         |
-| Defense Evasion           | 14801               | 14899                    | Web           |
-| Defense Evasion           | 14901               | 14999                    | Windows       |
-|                           |                     |                          |               |
-| Credential Access         | 15001               | 15099                    | Auth          |
-| Credential Access         | 15101               | 15199                    | Cloud         |
-| Credential Access         | 15201               | 15299                    | Data Layer    |
-| Credential Access         | 15301               | 15399                    | Linux         |
-| Credential Access         | 15401               | 15499                    | MacOS         |
-| Credential Access         | 15501               | 15599                    | Mobile        |
-| Credential Access         | 15601               | 15699                    | Network       |
-| Credential Access         | 15701               | 15799                    | Other         |
-| Credential Access         | 15801               | 15899                    | Web           |
-| Credential Access         | 15901               | 15999                    | Windows       |
-|                           |                     |                          |               |
-| Discovery                 | 16001               | 16099                    | Auth          |
-| Discovery                 | 16101               | 16199                    | Cloud         |
-| Discovery                 | 16201               | 16299                    | Data Layer    |
-| Discovery                 | 16301               | 16399                    | Linux         |
-| Discovery                 | 16401               | 16499                    | MacOS         |
-| Discovery                 | 16501               | 16599                    | Mobile        |
-| Discovery                 | 16601               | 16699                    | Network       |
-| Discovery                 | 16701               | 16799                    | Other         |
-| Discovery                 | 16801               | 16899                    | Web           |
-| Discovery                 | 16901               | 16999                    | Windows       |
-|                           |                     |                          |               |
-| Lateral Movement          | 17001               | 17099                    | Auth          |
-| Lateral Movement          | 17101               | 17199                    | Cloud         |
-| Lateral Movement          | 17201               | 17299                    | Data Layer    |
-| Lateral Movement          | 17301               | 17399                    | Linux         |
-| Lateral Movement          | 17401               | 17499                    | MacOS         |
-| Lateral Movement          | 17501               | 17599                    | Mobile        |
-| Lateral Movement          | 17601               | 17699                    | Network       |
-| Lateral Movement          | 17701               | 17799                    | Other         |
-| Lateral Movement          | 17801               | 17899                    | Web           |
-| Lateral Movement          | 17901               | 17999                    | Windows       |
-|                           |                     |                          |               |
-| Collection                | 18001               | 18099                    | Auth          |
-| Collection                | 18101               | 18199                    | Cloud         |
-| Collection                | 18201               | 18299                    | Data Layer    |
-| Collection                | 18301               | 18399                    | Linux         |
-| Collection                | 18401               | 18499                    | MacOS         |
-| Collection                | 18501               | 18599                    | Mobile        |
-| Collection                | 18601               | 18699                    | Network       |
-| Collection                | 18701               | 18799                    | Other         |
-| Collection                | 18801               | 18899                    | Web           |
-| Collection                | 18901               | 18999                    | Windows       |
-|                           |                     |                          |               |
-| Exfiltration              | 19001               | 19099                    | Auth          |
-| Exfiltration              | 19101               | 19199                    | Cloud         |
-| Exfiltration              | 19201               | 19299                    | Data Layer    |
-| Exfiltration              | 19301               | 19399                    | Linux         |
-| Exfiltration              | 19401               | 19499                    | MacOS         |
-| Exfiltration              | 19501               | 19599                    | Mobile        |
-| Exfiltration              | 19601               | 19699                    | Network       |
-| Exfiltration              | 19701               | 19799                    | Other         |
-| Exfiltration              | 19801               | 19899                    | Web           |
-| Exfiltration              | 19901               | 19999                    | Windows       |
-|                           |                     |                          |               |
-| Command and Control       | 20001               | 20099                    | Auth          |
-| Command and Control       | 20101               | 20199                    | Cloud         |
-| Command and Control       | 20201               | 20299                    | Data Layer    |
-| Command and Control       | 20301               | 20399                    | Linux         |
-| Command and Control       | 20401               | 20499                    | MacOS         |
-| Command and Control       | 20501               | 20599                    | Mobile        |
-| Command and Control       | 20601               | 20699                    | Network       |
-| Command and Control       | 20701               | 20799                    | Other         |
-| Command and Control       | 20801               | 20899                    | Web           |
-| Command and Control       | 20901               | 20999                    | Windows       |
-|                           |                     |                          |               |
-| Behavioral Detection      | 30001               | 30099                    | Auth          |
-| Behavioral Detection      | 30101               | 30199                    | Cloud         |
-| Behavioral Detection      | 30201               | 30299                    | Data Layer    |
-| Behavioral Detection      | 30301               | 30399                    | Linux         |
-| Behavioral Detection      | 30401               | 30499                    | MacOS         |
-| Behavioral Detection      | 30501               | 30599                    | Mobile        |
-| Behavioral Detection      | 30601               | 30699                    | Network       |
-| Behavioral Detection      | 30701               | 30799                    | Other         |
-| Behavioral Detection      | 30801               | 30899                    | Web           |
-| Behavioral Detection      | 30901               | 30999                    | Windows       |
-|                           |                     |                          |               |
-| Multivariate Correlation  | 40001               | 40099                    | Auth          |
-| Multivariate Correlation  | 40101               | 40199                    | Cloud         |
-| Multivariate Correlation  | 40201               | 40299                    | Data Layer    |
-| Multivariate Correlation  | 40301               | 40399                    | Linux         |
-| Multivariate Correlation  | 40401               | 40499                    | MacOS         |
-| Multivariate Correlation  | 40501               | 40599                    | Mobile        |
-| Multivariate Correlation  | 40601               | 40699                    | Network       |
-| Multivariate Correlation  | 40701               | 40799                    | Other         |
-| Multivariate Correlation  | 40801               | 40899                    | Web           |
-| Multivariate Correlation  | 40901               | 40999                    | Windows       |
-|                           |                     |                          |               |
-| Machine Learning          | 50001               | 50099                    | Auth          |
-| Machine Learning          | 50101               | 50199                    | Cloud         |
-| Machine Learning          | 50201               | 50299                    | Data Layer    |
-| Machine Learning          | 50301               | 50399                    | Linux         |
-| Machine Learning          | 50401               | 50499                    | MacOS         |
-| Machine Learning          | 50501               | 50599                    | Mobile        |
-| Machine Learning          | 50601               | 50699                    | Network       |
-| Machine Learning          | 50701               | 50799                    | Other         |
-| Machine Learning          | 50801               | 50899                    | Web           |
-| Machine Learning          | 50901               | 50999                    | Windows       |
+| SpaceID (SID) Range Start | Range End                | Classification             |         |
+|---------------------------|--------------------------|----------------------------|---------|
+| 0                         | 10,000                   | Reserved for SpaceCake Use |         |
+| 10,001                    | 19,999                   | Initial Access             |         |
+| 20,001                    | 29,999                   | Execution                  |         |
+| 30,001                    | 39,999                   | Persistence                |         |
+| 40,001                    | 49,999                   | Privliege Escalation       |         |
+| 50,001                    | 59,999                   | Defense Evasion            |         |
+| 60,001                    | 69,999                   | Credential Access          |         |
+| 70,001                    | 79,999                   | Discovery                  |         |
+| 80,001                    | 89,999                   | Lateral Movement           |         |
+| 90,001                    | 99,999                   | Collection                 |         |
+| 100,001                   | 109,999                  | Exfiltration               |         |
+| 110,001                   | 119,999                  | Command and Control        |         |
+| 200,001                   | 299,999                  | Behavioral Detection       |         |
+| 300,001                   | 399,999                  | Multivariate Correlation   |         |
+| 400,001                   | 499,999                  | Machine Learning           |         |
+| 1,000,001                 | 1,999,999                | Reserved for Local Use     |         |
+|                           |                          |                            |         |
+| Data Pipeline             | Category                 | SpaceID (SID) start        | SID end |
+| Auth                      | Initial Access           | 10,001                     | 10,999  |
+| Cloud                     | Initial Access           | 11,001                     | 11,999  |
+| Data Layer                | Initial Access           | 12,001                     | 12,999  |
+| Linux                     | Initial Access           | 13,001                     | 13,999  |
+| MacOS                     | Initial Access           | 14,001                     | 14,999  |
+| Mobile                    | Initial Access           | 15,001                     | 15,999  |
+| Network                   | Initial Access           | 16,001                     | 16,999  |
+| Other                     | Initial Access           | 17,001                     | 17,999  |
+| Web                       | Initial Access           | 18,001                     | 18,999  |
+| Windows                   | Initial Access           | 19,001                     | 19,999  |
+|                           |                          |                            |         |
+| Auth                      | Execution                | 20,001                     | 20,999  |
+| Cloud                     | Execution                | 21,001                     | 21,999  |
+| Data Layer                | Execution                | 22,001                     | 22,999  |
+| Linux                     | Execution                | 23,001                     | 23,999  |
+| MacOS                     | Execution                | 24,001                     | 24,999  |
+| Mobile                    | Execution                | 25,001                     | 25,999  |
+| Network                   | Execution                | 26,001                     | 26,999  |
+| Other                     | Execution                | 27,001                     | 27,999  |
+| Web                       | Execution                | 28,001                     | 28,999  |
+| Windows                   | Execution                | 29,001                     | 29,999  |
+|                           |                          |                            |         |
+| Auth                      | Persistence              | 30,001                     | 30,999  |
+| Cloud                     | Persistence              | 31,001                     | 31,999  |
+| Data Layer                | Persistence              | 32,001                     | 32,999  |
+| Linux                     | Persistence              | 33,001                     | 33,999  |
+| MacOS                     | Persistence              | 34,001                     | 34,999  |
+| Mobile                    | Persistence              | 35,001                     | 35,999  |
+| Network                   | Persistence              | 36,001                     | 36,999  |
+| Other                     | Persistence              | 37,001                     | 37,999  |
+| Web                       | Persistence              | 38,001                     | 38,999  |
+| Windows                   | Persistence              | 39,001                     | 39,999  |
+|                           |                          |                            |         |
+| Auth                      | Privliege Escalation     | 40,001                     | 40,999  |
+| Cloud                     | Privliege Escalation     | 41,001                     | 41,999  |
+| Data Layer                | Privliege Escalation     | 42,001                     | 42,999  |
+| Linux                     | Privliege Escalation     | 43,001                     | 43,999  |
+| MacOS                     | Privliege Escalation     | 44,001                     | 44,999  |
+| Mobile                    | Privliege Escalation     | 45,001                     | 45,999  |
+| Network                   | Privliege Escalation     | 46,001                     | 46,999  |
+| Other                     | Privliege Escalation     | 47,001                     | 47,999  |
+| Web                       | Privliege Escalation     | 48,001                     | 48,999  |
+| Windows                   | Privliege Escalation     | 49,001                     | 49,999  |
+|                           |                          |                            |         |
+| Auth                      | Defense Evasion          | 50,001                     | 50,999  |
+| Cloud                     | Defense Evasion          | 51,001                     | 51,999  |
+| Data Layer                | Defense Evasion          | 52,001                     | 52,999  |
+| Linux                     | Defense Evasion          | 53,001                     | 53,999  |
+| MacOS                     | Defense Evasion          | 54,001                     | 54,999  |
+| Mobile                    | Defense Evasion          | 55,001                     | 55,999  |
+| Network                   | Defense Evasion          | 56,001                     | 56,999  |
+| Other                     | Defense Evasion          | 57,001                     | 57,999  |
+| Web                       | Defense Evasion          | 58,001                     | 58,999  |
+| Windows                   | Defense Evasion          | 59,001                     | 59,999  |
+|                           |                          |                            |         |
+| Auth                      | Credential Access        | 60,001                     | 60,999  |
+| Cloud                     | Credential Access        | 61,001                     | 61,999  |
+| Data Layer                | Credential Access        | 62,001                     | 62,999  |
+| Linux                     | Credential Access        | 63,001                     | 63,999  |
+| MacOS                     | Credential Access        | 64,001                     | 64,999  |
+| Mobile                    | Credential Access        | 65,001                     | 65,999  |
+| Network                   | Credential Access        | 66,001                     | 66,999  |
+| Other                     | Credential Access        | 67,001                     | 67,999  |
+| Web                       | Credential Access        | 68,001                     | 68,999  |
+| Windows                   | Credential Access        | 69,001                     | 69,999  |
+|                           |                          |                            |         |
+| Auth                      | Discovery                | 70,001                     | 70,999  |
+| Cloud                     | Discovery                | 71,001                     | 71,999  |
+| Data Layer                | Discovery                | 72,001                     | 72,999  |
+| Linux                     | Discovery                | 73,001                     | 73,999  |
+| MacOS                     | Discovery                | 74,001                     | 74,999  |
+| Mobile                    | Discovery                | 75,001                     | 75,999  |
+| Network                   | Discovery                | 76,001                     | 76,999  |
+| Other                     | Discovery                | 77,001                     | 77,999  |
+| Web                       | Discovery                | 78,001                     | 78,999  |
+| Windows                   | Discovery                | 79,001                     | 79,999  |
+|                           |                          |                            |         |
+| Auth                      | Lateral Movement         | 81,001                     | 81,999  |
+| Cloud                     | Lateral Movement         | 81,001                     | 81,999  |
+| Data Layer                | Lateral Movement         | 81,001                     | 81,999  |
+| Linux                     | Lateral Movement         | 81,001                     | 81,999  |
+| MacOS                     | Lateral Movement         | 81,001                     | 81,999  |
+| Mobile                    | Lateral Movement         | 81,001                     | 81,999  |
+| Network                   | Lateral Movement         | 81,001                     | 81,999  |
+| Other                     | Lateral Movement         | 81,001                     | 81,999  |
+| Web                       | Lateral Movement         | 81,001                     | 81,999  |
+| Windows                   | Lateral Movement         | 81,001                     | 81,999  |
+|                           |                          |                            |         |
+| Auth                      | Collection               | 90,001                     | 90,999  |
+| Cloud                     | Collection               | 91,001                     | 91,999  |
+| Data Layer                | Collection               | 92,001                     | 92,999  |
+| Linux                     | Collection               | 93,001                     | 93,999  |
+| MacOS                     | Collection               | 94,001                     | 94,999  |
+| Mobile                    | Collection               | 95,001                     | 95,999  |
+| Network                   | Collection               | 96,001                     | 96,999  |
+| Other                     | Collection               | 97,001                     | 97,999  |
+| Web                       | Collection               | 98,001                     | 98,999  |
+| Windows                   | Collection               | 99,001                     | 99,999  |
+|                           |                          |                            |         |
+| Auth                      | Exfiltration             | 100,001                    | 100,999 |
+| Cloud                     | Exfiltration             | 101,001                    | 101,999 |
+| Data Layer                | Exfiltration             | 102,001                    | 102,999 |
+| Linux                     | Exfiltration             | 103,001                    | 103,999 |
+| MacOS                     | Exfiltration             | 104,001                    | 104,999 |
+| Mobile                    | Exfiltration             | 105,001                    | 105,999 |
+| Network                   | Exfiltration             | 106,001                    | 106,999 |
+| Other                     | Exfiltration             | 107,001                    | 107,999 |
+| Web                       | Exfiltration             | 108,001                    | 108,999 |
+| Windows                   | Exfiltration             | 109,001                    | 109,999 |
+|                           |                          |                            |         |
+| Auth                      | Command and Control      | 110,001                    | 110,999 |
+| Cloud                     | Command and Control      | 111,001                    | 111,999 |
+| Data Layer                | Command and Control      | 112,001                    | 112,999 |
+| Linux                     | Command and Control      | 113,001                    | 113,999 |
+| MacOS                     | Command and Control      | 114,001                    | 114,999 |
+| Mobile                    | Command and Control      | 115,001                    | 115,999 |
+| Network                   | Command and Control      | 116,001                    | 116,999 |
+| Other                     | Command and Control      | 117,001                    | 117,999 |
+| Web                       | Command and Control      | 118,001                    | 118,999 |
+| Windows                   | Command and Control      | 119,001                    | 119,999 |
+|                           |                          |                            |         |
+| Auth                      | Behavioral Detection     | 200,001                    | 209,999 |
+| Cloud                     | Behavioral Detection     | 210,001                    | 219,999 |
+| Data Layer                | Behavioral Detection     | 220,001                    | 229,999 |
+| Linux                     | Behavioral Detection     | 230,001                    | 239,999 |
+| MacOS                     | Behavioral Detection     | 240,001                    | 249,999 |
+| Mobile                    | Behavioral Detection     | 250,001                    | 259,999 |
+| Network                   | Behavioral Detection     | 260,001                    | 269,999 |
+| Other                     | Behavioral Detection     | 270,001                    | 279,999 |
+| Web                       | Behavioral Detection     | 280,001                    | 289,999 |
+| Windows                   | Behavioral Detection     | 290,001                    | 299,999 |
+|                           |                          |                            |         |
+| Auth                      | Multivariate Correlation | 300,001                    | 309,999 |
+| Cloud                     | Multivariate Correlation | 310,001                    | 319,999 |
+| Data Layer                | Multivariate Correlation | 320,001                    | 329,999 |
+| Linux                     | Multivariate Correlation | 330,001                    | 339,999 |
+| MacOS                     | Multivariate Correlation | 340,001                    | 349,999 |
+| Mobile                    | Multivariate Correlation | 350,001                    | 359,999 |
+| Network                   | Multivariate Correlation | 360,001                    | 369,999 |
+| Other                     | Multivariate Correlation | 370,001                    | 379,999 |
+| Web                       | Multivariate Correlation | 380,001                    | 389,999 |
+| Windows                   | Multivariate Correlation | 390,001                    | 399,999 |
+|                           |                          |                            |         |
+| Auth                      | Machine Learning         | 400,001                    | 409,999 |
+| Cloud                     | Machine Learning         | 410,001                    | 419,999 |
+| Data Layer                | Machine Learning         | 400,002                    | 410,000 |
+| Linux                     | Machine Learning         | 410,002                    | 420,000 |
+| MacOS                     | Machine Learning         | 400,003                    | 410,001 |
+| Mobile                    | Machine Learning         | 410,003                    | 420,001 |
+| Network                   | Machine Learning         | 400,004                    | 410,002 |
+| Other                     | Machine Learning         | 410,004                    | 420,002 |
+| Web                       | Machine Learning         | 400,005                    | 410,003 |
+| Windows                   | Machine Learning         | 410,005                    | 420,003 |
