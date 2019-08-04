@@ -1,0 +1,30 @@
+output {
+
+
+	if [srcip] and [username] {
+
+		slack {
+			url => "https://hooks.slack.com/services/%WEBHOOK%"
+			username => "JARVIS"
+			format => "Sir, we have auth activity for %{username} on %{hostname} coming from %{srcip}."
+		}
+
+	}
+
+
+
+
+output {
+
+
+
+if [message] =~ /root/ {
+
+		slack {
+			url => "https://hooks.slack.com/services/%WEBHOOK%"
+			username => "EDDIE"
+			format => "Hi there! I'm Eddie, your slackbot, and I know I'm going to get a bundle of kicks out of any alerts you care to run through me. Um, guys, I have root Activity. Message follows %{message}"
+		}
+
+	}
+	}
