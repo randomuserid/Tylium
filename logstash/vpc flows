@@ -1,0 +1,46 @@
+## AWS VPC Flow Data Config
+
+input {
+    cloudwatch_logs {
+        log_group => [ "vpc-flow-logs" ]
+        access_key_id => "%KEY%"
+        secret_access_key => "%KEY%"
+		tags => ["vflows"]
+    }
+}
+
+
+filter {
+
+if "vflows" in [tags] {
+		grok {
+				match => { "message" => "%{INT:version} %{NUMBER:accountid} %{DATA:interfaceid} %{IP:srcip} %{IP:dstip} %{NUMBER:srcport} %{NUMBER:dstport} %{INT:protocol} %{NUMBER:packets} %{NUMBER:bytes} %{DATA:starttime} %{DATA:endtime} %{WORD:action} %{WORD:logstatus}" }
+			}
+		}
+
+	   # parse timestamp
+    if [starttime] and [endtime] {
+        mutate {
+            add_field => { "start_time" => "%{starttime}" }
+        }
+        date {
+            match => ["start_time", "UNIX" ]
+            timezone => ['UTC']
+        }
+    }
+
+	geoip {source => "srcip" target => "geoip_src"}
+	geoip {source => "dstip" target => "geoip_dst"}
+
+}
+
+output {
+
+if "vflows" in [tags] {
+	elasticsearch {
+		hosts => ["172.16.200.183:9200"]
+		index => "vflows"
+	}
+
+}
+}

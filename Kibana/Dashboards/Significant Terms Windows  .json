@@ -1,0 +1,18 @@
+[
+  {
+    "_id": "f3b6cf40-516d-11e9-8bec-61e6d45412dd",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Significant Terms: Windows",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"panelIndex\":\"1\",\"gridData\":{\"x\":0,\"y\":0,\"w\":12,\"h\":3,\"i\":\"1\"},\"id\":\"ccca5cd0-516d-11e9-8bec-61e6d45412dd\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"panelIndex\":\"2\",\"gridData\":{\"x\":0,\"y\":3,\"w\":12,\"h\":3,\"i\":\"2\"},\"id\":\"9745bb20-516f-11e9-8bec-61e6d45412dd\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"panelIndex\":\"3\",\"gridData\":{\"x\":0,\"y\":6,\"w\":6,\"h\":3,\"i\":\"3\"},\"id\":\"6b814c40-b078-11e8-8cc8-ff90ebef9cdc\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"gridData\":{\"w\":6,\"h\":3,\"x\":6,\"y\":6,\"i\":\"4\"},\"version\":\"6.2.4\",\"panelIndex\":\"4\",\"type\":\"visualization\",\"id\":\"29a23c80-5181-11e9-8bec-61e6d45412dd\"}]",
+      "optionsJSON": "{\"darkTheme\":false,\"hidePanelTitles\":false,\"useMargins\":true}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[],\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  }
+]

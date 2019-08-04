@@ -1,0 +1,18 @@
+[
+  {
+    "_id": "b9d55cd0-8ae2-11e8-85f1-17d07056e8be",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Linux",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"panelIndex\":\"1\",\"gridData\":{\"x\":0,\"y\":16,\"w\":12,\"h\":5,\"i\":\"1\"},\"id\":\"4c73eae0-8ae1-11e8-85f1-17d07056e8be\",\"type\":\"visualization\",\"version\":\"6.2.4\",\"embeddableConfig\":{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":3,\"direction\":\"desc\"}}}}},{\"panelIndex\":\"2\",\"gridData\":{\"x\":0,\"y\":21,\"w\":12,\"h\":5,\"i\":\"2\"},\"id\":\"3a8d9780-8ae2-11e8-85f1-17d07056e8be\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"panelIndex\":\"3\",\"gridData\":{\"x\":0,\"y\":3,\"w\":6,\"h\":3,\"i\":\"3\"},\"id\":\"1417e640-8ae3-11e8-85f1-17d07056e8be\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"panelIndex\":\"4\",\"gridData\":{\"x\":6,\"y\":3,\"w\":6,\"h\":3,\"i\":\"4\"},\"id\":\"fe64c8e0-8ae2-11e8-85f1-17d07056e8be\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"panelIndex\":\"5\",\"gridData\":{\"x\":0,\"y\":14,\"w\":12,\"h\":2,\"i\":\"5\"},\"id\":\"201c6fa0-c437-11e8-9693-c73a4bbbdd00\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"panelIndex\":\"6\",\"gridData\":{\"x\":0,\"y\":10,\"w\":12,\"h\":4,\"i\":\"6\"},\"embeddableConfig\":{\"spy\":{\"mode\":{\"name\":\"table\"}},\"vis\":{\"params\":{\"sort\":{\"columnIndex\":2,\"direction\":\"asc\"}}}},\"id\":\"a66fe280-b1fe-11e8-8cc8-ff90ebef9cdc\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"panelIndex\":\"7\",\"gridData\":{\"x\":0,\"y\":6,\"w\":12,\"h\":4,\"i\":\"7\"},\"id\":\"ebfc8880-b078-11e8-8cc8-ff90ebef9cdc\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"panelIndex\":\"8\",\"gridData\":{\"x\":0,\"y\":0,\"w\":12,\"h\":3,\"i\":\"8\"},\"id\":\"2ede7ef0-c43e-11e8-9693-c73a4bbbdd00\",\"type\":\"visualization\",\"version\":\"6.2.4\"}]",
+      "optionsJSON": "{\"darkTheme\":false,\"hidePanelTitles\":false,\"useMargins\":true}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[],\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  }
+]

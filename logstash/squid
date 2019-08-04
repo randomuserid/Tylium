@@ -1,0 +1,33 @@
+input {
+	file {
+		path => "/var/log/proxy.log"
+		start_position => "beginning"
+		sincedb_path => "/dev/null"
+	}
+}
+
+filter {
+	grok {
+		match => { message => "%{NUMBER:datetime}\t%{INT:elapsed}\t%{IPV4:srcip}\t%{WORD:proxy_result}/%{INT:http_response}\t%{INT:bytes_xferred}\t%{WORD:http_method}\t%{URI:url}\t%{WORD:squid_handle}/%{IPV4:dstip}\t%{GREEDYDATA:content_type}" }
+	}
+
+	date {
+		match => [ "datetime","UNIX"]
+	}
+
+
+	mutate {
+		remove_field => ["message","squid_handle","datetime"]
+		lowercase => ["url"]
+		convert => { 
+			"elapsed" => "float" 
+			"bytes_xferred" => "integer"
+			"http_response" => "integer"
+		}
+	}
+
+}
+
+output {
+  elasticsearch { hosts => ["192.168.1.4:9200"] }
+}

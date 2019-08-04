@@ -1,0 +1,18 @@
+[
+  {
+    "_id": "172b1ec0-78d1-11e8-85f1-17d07056e8be",
+    "_type": "dashboard",
+    "_source": {
+      "title": "vFlows",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"panelIndex\":\"1\",\"gridData\":{\"x\":0,\"y\":12,\"w\":6,\"h\":3,\"i\":\"1\"},\"id\":\"adf6edb0-78cd-11e8-85f1-17d07056e8be\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"panelIndex\":\"2\",\"gridData\":{\"x\":0,\"y\":15,\"w\":12,\"h\":5,\"i\":\"2\"},\"id\":\"49602040-78cf-11e8-85f1-17d07056e8be\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"panelIndex\":\"4\",\"gridData\":{\"x\":0,\"y\":20,\"w\":12,\"h\":6,\"i\":\"4\"},\"embeddableConfig\":{\"spy\":null,\"vis\":{\"params\":{\"sort\":{\"columnIndex\":5,\"direction\":\"desc\"}}}},\"id\":\"5cc778e0-78cf-11e8-85f1-17d07056e8be\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"panelIndex\":\"5\",\"gridData\":{\"x\":6,\"y\":12,\"w\":6,\"h\":3,\"i\":\"5\"},\"id\":\"a62e0820-78d2-11e8-85f1-17d07056e8be\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"panelIndex\":\"6\",\"gridData\":{\"x\":0,\"y\":0,\"w\":12,\"h\":3,\"i\":\"6\"},\"id\":\"2be1a820-78db-11e8-85f1-17d07056e8be\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"panelIndex\":\"8\",\"gridData\":{\"x\":0,\"y\":6,\"w\":12,\"h\":3,\"i\":\"8\"},\"version\":\"6.2.4\",\"type\":\"visualization\",\"id\":\"dd3f5fc0-c43c-11e8-9693-c73a4bbbdd00\"},{\"panelIndex\":\"9\",\"gridData\":{\"x\":0,\"y\":9,\"w\":12,\"h\":3,\"i\":\"9\"},\"version\":\"6.2.4\",\"type\":\"visualization\",\"id\":\"0e378990-c43d-11e8-9693-c73a4bbbdd00\"},{\"panelIndex\":\"10\",\"gridData\":{\"x\":0,\"y\":3,\"w\":12,\"h\":3,\"i\":\"10\"},\"version\":\"6.2.4\",\"type\":\"visualization\",\"id\":\"8240e3e0-c43d-11e8-9693-c73a4bbbdd00\"}]",
+      "optionsJSON": "{\"darkTheme\":false,\"hidePanelTitles\":false,\"useMargins\":true}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[],\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  }
+]

@@ -1,0 +1,16 @@
+[
+  {
+    "_id": "ccca5cd0-516d-11e9-8bec-61e6d45412dd",
+    "_type": "visualization",
+    "_source": {
+      "title": "ST: Windows: Anomalous Image Loads",
+      "visState": "{\"title\":\"ST: Windows: Anomalous Image Loads\",\"type\":\"table\",\"params\":{\"perPage\":25,\"showPartialRows\":false,\"showMeticsAtAllLevels\":false,\"sort\":{\"columnIndex\":2,\"direction\":\"asc\"},\"showTotal\":false,\"totalFunc\":\"sum\"},\"aggs\":[{\"id\":\"1\",\"enabled\":true,\"type\":\"count\",\"schema\":\"metric\",\"params\":{}},{\"id\":\"3\",\"enabled\":true,\"type\":\"terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"event_data.Image.keyword\",\"otherBucket\":false,\"otherBucketLabel\":\"Other\",\"missingBucket\":false,\"missingBucketLabel\":\"Missing\",\"size\":100,\"order\":\"desc\",\"orderBy\":\"1\"}},{\"id\":\"4\",\"enabled\":true,\"type\":\"significant_terms\",\"schema\":\"bucket\",\"params\":{\"field\":\"task.keyword\",\"size\":100}}]}",
+      "uiStateJSON": "{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":2,\"direction\":\"desc\"}}},\"spy\":null}",
+      "description": "",
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"d57ae8e0-c342-11e8-9693-c73a4bbbdd00\",\"filter\":[{\"meta\":{\"index\":\"d57ae8e0-c342-11e8-9693-c73a4bbbdd00\",\"type\":\"phrase\",\"key\":\"task.keyword\",\"value\":\"Image loaded (rule: ImageLoad)\",\"params\":{\"query\":\"Image loaded (rule: ImageLoad)\",\"type\":\"phrase\"},\"disabled\":false,\"negate\":false,\"alias\":null,\"apply\":true},\"query\":{\"match\":{\"task.keyword\":{\"query\":\"Image loaded (rule: ImageLoad)\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"index\":\"d57ae8e0-c342-11e8-9693-c73a4bbbdd00\",\"negate\":true,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"event_data.Image.keyword\",\"value\":\"C:\\\\\\\\Windows*\",\"params\":{\"query\":\"C:\\\\\\\\Windows*\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"event_data.Image.keyword\":{\"query\":\"C:\\\\\\\\Windows*\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}],\"query\":{\"query\":\"event.data.Image.keyword = \\\"Users\\\"\",\"language\":\"lucene\"}}"
+      }
+    }
+  }
+]

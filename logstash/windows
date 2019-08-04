@@ -1,0 +1,20 @@
+input {
+        beats {
+                port => 2016
+                tags => ["windows"]
+        }
+}
+
+filter {
+
+}
+
+output {
+
+    if "windows" in [tags] {
+        elasticsearch {
+                hosts => ["172.16.1.211:9200"]
+                index => "windows-%{+YYYY.MM.dd}"
+ }
+}
+}

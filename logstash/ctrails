@@ -1,0 +1,24 @@
+input {
+  s3 {
+    access_key_id => "%KEY%"
+    secret_access_key => "%KEY%"
+    bucket => "cloudtrails-for-logstash"
+    codec => "cloudtrail"
+    tags => ["cloudtrail"]
+  }
+ }
+
+filter {
+
+
+}
+
+output {
+
+if "cloudtrail" in [tags] {
+        elasticsearch {
+                hosts => ["172.16.1.211:9200"]
+                index => "cloudtrails-%{+YYYY.MM.dd}"
+        }
+}
+}

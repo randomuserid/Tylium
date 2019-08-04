@@ -1,0 +1,93 @@
+input {
+        syslog {
+                port => "1600"
+	        type => inputType
+                codec => plain {
+                charset => "ISO-8859-1"
+        }
+}
+}
+
+filter {
+
+    if [program] == "go-audit" {
+         alter {
+         add_field => {"dparser" => "go-audit" }
+                 }
+                 }
+     if [program] == "go-audit" {
+           goaudit {
+              source => "message"
+                }
+        }
+
+  if [program] == "suricata" {
+         alter {
+         add_field => {"dparser" => "suricata" }
+                 }
+                 }
+
+  if [program] == "suricata" {
+	      json {
+	         source => "message"
+	        }
+        }
+	  if [program] =~ "nginx-access" {
+         alter {
+         add_field => {"dparser" => "nginx-access" }
+		 }
+		 }
+
+	  if [program] =~ "nginx-error" {
+         alter {
+         add_field => {"dparser" => "nginx-error" }
+		 }
+		 }
+
+  if [program] == "nginx-access" {
+
+	grok {
+	   match => [
+
+	
+
+         "message", "%{IP:srcip} %{DATA:field2} %{DATA:username} \[%{HTTPDATE:timestamp}\] \"%{WORD:verb} %{URIPATHPARAM:uri} %{DATA:httpversion}\" %{NUMBER:response} %{NUMBER:bytes} \"%{DATA:referrer}\" \"%{GREEDYDATA:useragent}\""
+		  ]
+        }
+}
+
+     if [program] == "nginx-error" {
+		    grok { match => {"message" => "(?<timestamp>\d{4}/\d{2}/\d{2} \d{2}:\d{2}:\d{2}) \[%{DATA:err_severity}\] (%{NUMBER:pid:int}#%{NUMBER}: \*%{NUMBER}|\*%{NUMBER}) %{DATA:err_message}(?:, client: (?<srcip>%{IP}|%{HOSTNAME}))(?:, server: %{IPORHOST:host})(?:, request: \"%{WORD:httpverb} %{URIPATHPARAM:httprequest} HTTP/%{NUMBER:httpversion}\")?(?:, upstream: \"%{DATA:upstream}\")(?:, host: \"%{IPORHOST:host}\")(?:, referrer: \"%{DATA:httpreferrer}\")"}
+		     }
+			 }
+
+	geoip {source => "srcip" target => "geoip_src"}
+
+}
+
+output {
+
+  if [dparser] == "go-audit" {
+    elasticsearch {
+      hosts => ["172.16.1.211:9200"]
+      index => "linux-auditd-%{+YYYY.MM.dd}" }
+ }
+
+   if [dparser] == "suricata" {
+    elasticsearch {
+      hosts => ["172.16.1.211:9200"]
+      index => "ids-suricata-%{+YYYY.MM.dd}" }
+ }
+    if [dparser] == "nginx-access" {
+    elasticsearch {
+      hosts => ["172.16.1.211:9200"]
+      index => "nginx-access-%{+YYYY.MM.dd}" }
+	  }
+
+    if [dparser] == "nginx-error" {
+    elasticsearch {
+      hosts => ["172.16.1.211:9200"]
+      index => "nginx-error-%{+YYYY.MM.dd}" }
+
+ }
+ }

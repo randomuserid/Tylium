@@ -1,0 +1,43 @@
+## Flow Data Config
+input {
+	file {
+		path => "/etc/logstash/data/flows.csv"
+		start_position => "beginning"
+		sincedb_path => "/dev/null"
+	}
+}
+
+filter {
+	csv {
+		columns => [srcip,dstip,srcport,dstport,protocol,packetcount,bytecount,tcpflags,starttime,duration,endtime,sensor]
+	}
+
+
+	date {
+		match => [ "starttime","ISO8601"]
+	}
+
+	mutate {
+		remove_field => ["sensor","message"]
+		convert => {
+			"srcport" => "integer"
+			"dstport" => "integer"
+			"protcol" => "integer"
+			"packetcount" => "integer"
+			"bytecount" => "integer"
+			"duration" => "float"
+		}
+	}
+
+	geoip {source => "srcip" target => "geoip_src"}
+	geoip {source => "dstip" target => "geoip_dst"}
+}
+
+output {
+
+	elasticsearch {
+		hosts => ["192.168.1.4:9200"]
+		index => "flows"
+	}
+
+}

@@ -1,0 +1,26 @@
+[
+  {
+    "_id": "3be6f940-c346-11e8-9693-c73a4bbbdd00",
+    "_type": "dashboard",
+    "_source": {
+      "title": "vFlows: Flow Viewer",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"panelIndex\":\"1\",\"gridData\":{\"x\":0,\"y\":0,\"w\":12,\"h\":10,\"i\":\"1\"},\"version\":\"6.2.4\",\"type\":\"search\",\"id\":\"d40c3650-c345-11e8-9693-c73a4bbbdd00\"}]",
+      "optionsJSON": "{\"darkTheme\":false,\"useMargins\":true,\"hidePanelTitles\":false}",
+      "version": 1,
+      "timeRestore": true,
+      "timeTo": "now",
+      "timeFrom": "now-15m",
+      "refreshInterval": {
+        "display": "30 seconds",
+        "pause": false,
+        "section": 1,
+        "value": 30000
+      },
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[],\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  }
+]

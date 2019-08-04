@@ -1,0 +1,18 @@
+[
+  {
+    "_id": "1261bba0-8e21-11e8-a043-11679be7ff31",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Windows",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"panelIndex\":\"1\",\"gridData\":{\"x\":0,\"y\":3,\"w\":6,\"h\":3,\"i\":\"1\"},\"id\":\"c4c41cf0-8e1e-11e8-a043-11679be7ff31\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"panelIndex\":\"2\",\"gridData\":{\"x\":6,\"y\":3,\"w\":6,\"h\":3,\"i\":\"2\"},\"id\":\"07830ec0-8e1f-11e8-a043-11679be7ff31\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"panelIndex\":\"3\",\"gridData\":{\"x\":0,\"y\":8,\"w\":12,\"h\":3,\"i\":\"3\"},\"id\":\"c304f5e0-8e20-11e8-a043-11679be7ff31\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"panelIndex\":\"4\",\"gridData\":{\"x\":0,\"y\":14,\"w\":12,\"h\":6,\"i\":\"4\"},\"id\":\"4115d3c0-8e1f-11e8-a043-11679be7ff31\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"panelIndex\":\"5\",\"gridData\":{\"x\":0,\"y\":20,\"w\":12,\"h\":7,\"i\":\"5\"},\"id\":\"920f0b70-8e1f-11e8-a043-11679be7ff31\",\"type\":\"visualization\",\"version\":\"6.2.4\"},{\"panelIndex\":\"6\",\"gridData\":{\"x\":0,\"y\":6,\"w\":12,\"h\":2,\"i\":\"6\"},\"version\":\"6.2.4\",\"type\":\"visualization\",\"id\":\"e4eeb8f0-c42e-11e8-9693-c73a4bbbdd00\"},{\"panelIndex\":\"7\",\"gridData\":{\"x\":0,\"y\":11,\"w\":12,\"h\":3,\"i\":\"7\"},\"version\":\"6.2.4\",\"type\":\"visualization\",\"id\":\"3739c1d0-c42b-11e8-9693-c73a4bbbdd00\",\"embeddableConfig\":{\"vis\":{\"params\":{\"sort\":{\"columnIndex\":2,\"direction\":\"asc\"}}}}},{\"panelIndex\":\"8\",\"gridData\":{\"x\":0,\"y\":0,\"w\":12,\"h\":3,\"i\":\"8\"},\"version\":\"6.2.4\",\"type\":\"visualization\",\"id\":\"64f21a30-c43c-11e8-9693-c73a4bbbdd00\"}]",
+      "optionsJSON": "{\"darkTheme\":false,\"hidePanelTitles\":false,\"useMargins\":true}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[],\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  }
+]

@@ -1,0 +1,18 @@
+[
+  {
+    "_id": "63534ee0-41de-11e9-8bec-61e6d45412dd",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Qualys",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"panelIndex\":\"1\",\"gridData\":{\"x\":0,\"y\":0,\"w\":12,\"h\":10,\"i\":\"1\"},\"version\":\"6.2.4\",\"type\":\"search\",\"id\":\"f1cd6b20-41dd-11e9-8bec-61e6d45412dd\"}]",
+      "optionsJSON": "{\"darkTheme\":false,\"useMargins\":true,\"hidePanelTitles\":false}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"query\":\"\",\"language\":\"lucene\"},\"filter\":[],\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  }
+]

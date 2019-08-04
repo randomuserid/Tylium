@@ -1,0 +1,25 @@
+[
+  {
+    "_id": "8cee4ac0-c443-11e8-9693-c73a4bbbdd00",
+    "_type": "dashboard",
+    "_source": {
+      "title": "IDS Event Viewer Filtered",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"panelIndex\":\"1\",\"gridData\":{\"x\":0,\"y\":0,\"w\":12,\"h\":11,\"i\":\"1\"},\"version\":\"6.2.4\",\"type\":\"search\",\"id\":\"32263da0-c443-11e8-9693-c73a4bbbdd00\"}]",
+      "optionsJSON": "{\"darkTheme\":false,\"useMargins\":true,\"hidePanelTitles\":false}",
+      "version": 1,
+      "timeRestore": true,
+      "timeTo": "now",
+      "timeFrom": "now-30d",
+      "refreshInterval": {
+        "display": "Off",
+        "pause": false,
+        "value": 0
+      },
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"query\":\"NOT  intelligence AND NOT tor\",\"language\":\"lucene\"},\"filter\":[{\"meta\":{\"negate\":true,\"index\":\"38253320-c342-11e8-9693-c73a4bbbdd00\",\"type\":\"phrase\",\"key\":\"alert.signature\",\"value\":\"SURICATA TLS invalid record/traffic\",\"params\":{\"query\":\"SURICATA TLS invalid record/traffic\",\"type\":\"phrase\"},\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"alert.signature\":{\"query\":\"SURICATA TLS invalid record/traffic\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"negate\":true,\"index\":\"38253320-c342-11e8-9693-c73a4bbbdd00\",\"type\":\"phrase\",\"key\":\"alert.signature\",\"value\":\"SURICATA TLS invalid handshake message\",\"params\":{\"query\":\"SURICATA TLS invalid handshake message\",\"type\":\"phrase\"},\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"alert.signature\":{\"query\":\"SURICATA TLS invalid handshake message\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"negate\":true,\"index\":\"38253320-c342-11e8-9693-c73a4bbbdd00\",\"type\":\"phrase\",\"key\":\"alert.signature\",\"value\":\"ET POLICY GNU/Linux APT User-Agent Outbound likely related to package management\",\"params\":{\"query\":\"ET POLICY GNU/Linux APT User-Agent Outbound likely related to package management\",\"type\":\"phrase\"},\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"alert.signature\":{\"query\":\"ET POLICY GNU/Linux APT User-Agent Outbound likely related to package management\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"negate\":true,\"index\":\"38253320-c342-11e8-9693-c73a4bbbdd00\",\"type\":\"phrase\",\"key\":\"alert.signature\",\"value\":\"ET SCAN Potential SSH Scan\",\"params\":{\"query\":\"ET SCAN Potential SSH Scan\",\"type\":\"phrase\"},\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"alert.signature\":{\"query\":\"ET SCAN Potential SSH Scan\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"negate\":true,\"index\":\"38253320-c342-11e8-9693-c73a4bbbdd00\",\"type\":\"phrase\",\"key\":\"alert.signature\",\"value\":\"ET CURRENT_EVENTS Possible TLS HeartBleed Unencrypted Request Method 4 (Inbound to Common SSL Port)\",\"params\":{\"query\":\"ET CURRENT_EVENTS Possible TLS HeartBleed Unencrypted Request Method 4 (Inbound to Common SSL Port)\",\"type\":\"phrase\"},\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"alert.signature\":{\"query\":\"ET CURRENT_EVENTS Possible TLS HeartBleed Unencrypted Request Method 4 (Inbound to Common SSL Port)\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"index\":\"38253320-c342-11e8-9693-c73a4bbbdd00\",\"negate\":true,\"disabled\":false,\"alias\":null,\"type\":\"phrase\",\"key\":\"alert.signature\",\"value\":\"SURICATA TLS overflow heartbeat encountered, possible exploit attempt (heartbleed)\",\"params\":{\"query\":\"SURICATA TLS overflow heartbeat encountered, possible exploit attempt (heartbleed)\",\"type\":\"phrase\"}},\"query\":{\"match\":{\"alert.signature\":{\"query\":\"SURICATA TLS overflow heartbeat encountered, possible exploit attempt (heartbleed)\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"negate\":true,\"index\":\"38253320-c342-11e8-9693-c73a4bbbdd00\",\"type\":\"phrase\",\"key\":\"alert.signature\",\"value\":\"ET DROP Dshield Block Listed Source group 1\",\"params\":{\"query\":\"ET DROP Dshield Block Listed Source group 1\",\"type\":\"phrase\"},\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"alert.signature\":{\"query\":\"ET DROP Dshield Block Listed Source group 1\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}},{\"meta\":{\"negate\":true,\"index\":\"38253320-c342-11e8-9693-c73a4bbbdd00\",\"type\":\"phrase\",\"key\":\"alert.signature\",\"value\":\"ET COMPROMISED Known Compromised or Hostile Host Traffic group 14\",\"params\":{\"query\":\"ET COMPROMISED Known Compromised or Hostile Host Traffic group 14\",\"type\":\"phrase\"},\"disabled\":false,\"alias\":null},\"query\":{\"match\":{\"alert.signature\":{\"query\":\"ET COMPROMISED Known Compromised or Hostile Host Traffic group 14\",\"type\":\"phrase\"}}},\"$state\":{\"store\":\"appState\"}}],\"highlightAll\":true,\"version\":true}"
+      }
+    }
+  }
+]

@@ -1,0 +1,42 @@
+input {
+
+file {
+                path => "/etc/logstash/data/vtcsv"
+                start_position => "beginning"
+				tags => ["virustotal"]
+				
+        }
+}
+
+filter {
+
+
+ if "virustotal" in [tags] {   
+	csv {
+		columns => [scan-id,sha1,resource,response-code,scan-date,permalink,total-scans,positive-scans,sha256,md5]
+	}
+	}
+	 
+ if "virustotal" in [tags]  {   
+	 alter {
+         add_field => {"dparser" => "virustotal" }
+         add_field => {"notice" => "This is a VirusTotal lookup correlation. Malware has been detected." }
+		 }
+		 }
+  if "virustotal" in [tags]  {  		 
+		 mutate {
+		remove_field => ["message"]
+	}
+		 
+		 }
+	}
+
+output {
+
+if "virustotal" in [tags] {
+	elasticsearch {
+		hosts => ["localhost:9200"]
+		index => "virustotal"
+	}
+	}
+	}
