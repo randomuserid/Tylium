@@ -2,7 +2,7 @@ input {
   s3 {
     access_key_id => "%KEY%"
     secret_access_key => "%KEY%"
-    bucket => "cloudtrails-for-logstash"
+    bucket => "%BUCKET%"
     codec => "cloudtrail"
     tags => ["cloudtrail"]
   }

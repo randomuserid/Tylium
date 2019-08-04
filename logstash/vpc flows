@@ -2,7 +2,7 @@
 
 input {
     cloudwatch_logs {
-        log_group => [ "vpc-flow-logs" ]
+        log_group => [ "%GROUP%" ]
         access_key_id => "%KEY%"
         secret_access_key => "%KEY%"
 		tags => ["vflows"]
