@@ -10,7 +10,7 @@ suricata-update -add-source et/open
 
 then run suricata-update and schedule it to run daily in a  cron job.
 
-Name: oisf/trafficid
+```Name: oisf/trafficid
   Vendor: OISF
   Summary: Suricata Traffic ID ruleset
   License: MIT
@@ -25,4 +25,4 @@ Name: sslbl/ssl-fp-blacklist
 Name: et/open
   Vendor: Proofpoint
   Summary: Emerging Threats Open Ruleset
-  License: MIT
+  License: MIT```
