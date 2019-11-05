@@ -11,17 +11,17 @@ Disable these if Suricata is running on a balancer or web server in AWS.
 Enable stats (to measure packet drops)
 
 
-# global stats configuration
+### global stats configuration
 stats:
   enabled: yes
-  # The interval field (in seconds) controls at what interval
-  # the loggers are invoked.
+  ### The interval field (in seconds) controls at what interval
+  ### the loggers are invoked.
   interval: 10
 
-# Configure the type of alert (and other) logging you would like.
+### Configure the type of alert (and other) logging you would like.
 outputs:
   
-  # Extensible Event Format (nicknamed EVE) event log in JSON format
+  ### Extensible Event Format (nicknamed EVE) event log in JSON format
   - eve-log:
       enabled: yes
       filetype: regular #regular|syslog|unix_dgram|unix_stream|redis
