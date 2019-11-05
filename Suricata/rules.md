@@ -1,8 +1,11 @@
 Suricata rules: enable these rule feeds using this syntax:
 
 suricata-update -add-source oisf/trafficid
+
 suricata-update -add-source ptresearch/attackdetection
+
 suricata-update -add-source sslbl/ssl-fp-blacklist
+
 suricata-update -add-source et/open
 
 then run suricata-update and schedule it to run daily in a  cron job.
