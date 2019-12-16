@@ -1,14 +1,11 @@
-Suricata rules: enable these rule feeds using this syntax:
+###Suricata rules: enable these rule feeds using this syntax:
 
-suricata-update -add-source oisf/trafficid
-
+```suricata-update -add-source oisf/trafficid
 suricata-update -add-source ptresearch/attackdetection
-
 suricata-update -add-source sslbl/ssl-fp-blacklist
-
 suricata-update -add-source et/open
-
-then run suricata-update and schedule it to run daily in a  cron job.
+suricata-update -add-source tgreen/hunting
+suricata-update -add-source  etnetera/aggressive```
 
 ```Name: oisf/trafficid
   Vendor: OISF
@@ -25,4 +22,12 @@ Name: sslbl/ssl-fp-blacklist
 Name: et/open
   Vendor: Proofpoint
   Summary: Emerging Threats Open Ruleset
+  License: MIT
+Name: tgreen/hunting
+  Vendor: tgreen
+  Summary: Threat hunting rules
+  License: GPLv3
+Name: etnetera/aggressive
+  Vendor: Etnetera a.s.
+  Summary: Etnetera aggressive IP blacklist
   License: MIT```
