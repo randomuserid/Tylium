@@ -1,13 +1,13 @@
 ### Suricata rules: enable these rule feeds using this syntax:
 
-```suricata-update -add-source oisf/trafficid
+`suricata-update -add-source oisf/trafficid
 suricata-update -add-source ptresearch/attackdetection
 suricata-update -add-source sslbl/ssl-fp-blacklist
 suricata-update -add-source et/open
 suricata-update -add-source tgreen/hunting
-suricata-update -add-source  etnetera/aggressive```
+suricata-update -add-source  etnetera/aggressive
 
-```Name: oisf/trafficid
+Name: oisf/trafficid
   Vendor: OISF
   Summary: Suricata Traffic ID ruleset
   License: MIT
@@ -30,4 +30,4 @@ Name: tgreen/hunting
 Name: etnetera/aggressive
   Vendor: Etnetera a.s.
   Summary: Etnetera aggressive IP blacklist
-  License: MIT```
+  License: MIT`
