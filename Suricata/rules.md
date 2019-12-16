@@ -1,6 +1,7 @@
 ### Suricata rules: enable these rule feeds using this syntax:
 
 ```suricata-update -add-source oisf/trafficid
+suricata-update -add-source oisf/trafficid
 suricata-update -add-source ptresearch/attackdetection
 suricata-update -add-source sslbl/ssl-fp-blacklist
 suricata-update -add-source et/open
