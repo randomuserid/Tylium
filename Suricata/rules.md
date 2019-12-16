@@ -1,4 +1,4 @@
-###Suricata rules: enable these rule feeds using this syntax:
+### Suricata rules: enable these rule feeds using this syntax:
 
 ```suricata-update -add-source oisf/trafficid
 suricata-update -add-source ptresearch/attackdetection
