@@ -1,0 +1,150 @@
+<Sysmon schemaversion="4.22">
+  <!-- Capture all hashes -->
+  <HashAlgorithms>*</HashAlgorithms>
+  <EventFiltering>
+ <!-- Event ID 1: Process creation -->
+
+<ProcessCreate onmatch="exclude">
+    </ProcessCreate>
+
+<!-- Event ID 2: A process changed a file creation time -->
+
+<FileCreateTime onmatch="exclude">
+    </FileCreateTime>
+
+<!-- Event ID 3: Network Connection -->
+
+<NetworkConnect onmatch="exclude">
+  <DestinationIp condition="contains">255.255.</DestinationIp>
+  <DestinationIp condition="contains">239.255.</DestinationIp>
+  <DestinationIp condition="contains">127.0.</DestinationIp>
+  <DestinationIp condition="contains">0:0:0</DestinationIp>
+  </NetworkConnect>
+
+<!-- Event ID 5: Process terminated -->
+
+  <ProcessTerminate onmatch="exclude">
+   </ProcessTerminate>
+
+<!-- Event ID: 6 Driver Loaded -->
+
+<DriverLoad onmatch="exclude">
+  <Signature condition="contains">microsoft</Signature>
+  <Signature condition="contains">windows</Signature>
+</DriverLoad>
+
+<!--Event ID 7: Image loaded -->
+
+    <ImageLoad onmatch="exclude">
+    </ImageLoad>
+
+<!-- Event ID 8: CreateRemoteThread -->
+
+<CreateRemoteThread onmatch="exclude">
+  </CreateRemoteThread >
+
+<!-- Event ID 9 RawAccessRead -->
+<!-- Use only on DCs. Events are supernumerary -->
+
+<!-- Event ID 10: ProcessAccess -->
+<!-- Events are supernumerary. -->
+
+<!-- Event ID 11 FileCreate -->
+
+    <FileCreate onmatch="exclude">
+  </FileCreate>
+
+<!-- Event ID 12: RegistryEvent -->
+
+
+  <RuleGroup name="" groupRelation="or">
+    <RegistryEvent onmatch="exclude">
+    <!--COMMENT:  Remove low-information noise. Often these hide a procress recreating an empty key and do not hide the values created subsequently.-->
+    <!--NOTE: A lot of noise can be removed by excluding CreateKey events, which are largely innocuous-->
+      <TargetObject condition="contains">\{CAFEEFAC-</TargetObject>
+      <EventType condition="is">CreateKey</EventType>
+      <TargetObject condition="begin with">HKLM\COMPONENTS</TargetObject>
+      <!--Inventory noise-->
+      <TargetObject condition="begin with">HKLM\Software\Microsoft\Windows\CurrentVersion\AppModel\StateRepository\Cache</TargetObject>
+      <!--Misc-->
+      <TargetObject condition="end with">Toolbar\WebBrowser</TargetObject> <!--Microsoft:IE: Extraneous activity-->
+      <TargetObject condition="end with">Browser\ITBar7Height</TargetObject> <!--Microsoft:IE: Extraneous activity, covers ShellBrowser and WebBrowser-->
+      <TargetObject condition="end with">Browser\ITBar7Layout</TargetObject> <!--Microsoft:IE: Extraneous activity-->
+      <TargetObject condition="end with">Internet Explorer\Toolbar\Locked</TargetObject> <!--Windows:Explorer: Extraneous activity-->
+      <TargetObject condition="end with">Toolbar\WebBrowser\{47833539-D0C5-4125-9FA8-0819E2EAAC93}</TargetObject> <!--Windows:Explorer: Extraneous activity-->
+      <TargetObject condition="end with">}\PreviousPolicyAreas</TargetObject> <!--Windows: Remove noise from \Winlogon\GPExtensions by svchost.exe-->
+      <TargetObject condition="contains">\Control\WMI\Autologger\</TargetObject> <!--Windows: Remove noise from monitoring "\Start"-->
+      <TargetObject condition="end with">HKLM\SYSTEM\CurrentControlSet\Services\UsoSvc\Start</TargetObject> <!--Windows: Remove noise from monitoring "\Start"-->
+      <TargetObject condition="end with">\Lsa\OfflineJoin\CurrentValue</TargetObject> <!--Windows: Sensitive value during domain join-->
+      <TargetObject condition="begin with">HKLM\Software\Microsoft\Windows\CurrentVersion\Installer\UserData\S-1-5-18\</TargetObject> <!--Windows: Remove noise monitoring installations run as system-->
+      <TargetObject condition="contains">_Classes\AppX</TargetObject> <!--Windows: Remove noise monitoring "Shell\open\command"--> <!--Win8+-->
+      <TargetObject condition="begin with">HKLM\Software\Microsoft\Windows\CurrentVersion\WINEVT\Publishers\</TargetObject> <!--Windows: SvcHost Noise-->
+      <!--Bootup Control noise-->
+      <TargetObject condition="end with">HKLM\SYSTEM\CurrentControlSet\Control\Lsa\LsaPid</TargetObject> <!--Windows:lsass.exe: Boot noise-->
+      <TargetObject condition="end with">HKLM\SYSTEM\CurrentControlSet\Control\Lsa\SspiCache</TargetObject> <!--Windows:lsass.exe: Boot noise--> <!--Win8+-->
+      <TargetObject condition="end with">HKLM\SYSTEM\CurrentControlSet\Control\Lsa\Kerberos\Domains</TargetObject> <!--Windows:lsass.exe: Boot noise--> <!--Win8+-->
+      <!--Services startup settings noise, some low-risk services routinely change it and this can be ignored-->
+      <TargetObject condition="end with">\Services\BITS\Start</TargetObject> <!--Windows: Remove noise from monitoring "\Start"-->
+      <TargetObject condition="end with">\services\clr_optimization_v2.0.50727_32\Start</TargetObject> <!--Microsoft:dotNet: Windows 7-->
+      <TargetObject condition="end with">\services\clr_optimization_v2.0.50727_64\Start</TargetObject> <!--Microsoft:dotNet: Windows 7-->
+      <TargetObject condition="end with">\services\clr_optimization_v4.0.30319_32\Start</TargetObject> <!--Microsoft:dotNet: Windows 10-->
+      <TargetObject condition="end with">\services\clr_optimization_v4.0.30319_64\Start</TargetObject> <!--Microsoft:dotNet: Windows 10-->
+      <TargetObject condition="end with">\services\deviceAssociationService\Start</TargetObject> <!--Windows: Remove noise from monitoring "\Start"-->
+      <TargetObject condition="end with">\services\fhsvc\Start</TargetObject> <!--Windows: File History Service-->
+      <TargetObject condition="end with">\services\nal\Start</TargetObject> <!--Intel: Network adapter diagnostic driver-->
+      <TargetObject condition="end with">\services\trustedInstaller\Start</TargetObject> <!--Windows: Remove noise from monitoring "\Start"-->
+      <TargetObject condition="end with">\services\tunnel\Start</TargetObject> <!--Windows: Remove noise from monitoring "\Start"-->
+      <TargetObject condition="end with">\services\usoSvc\Start</TargetObject> <!--Windows: Remove noise from monitoring "\Start"-->
+      <!--FileExts noise filtering-->
+      <TargetObject condition="end with">\UserChoice\ProgId</TargetObject> <!--Windows: Remove noise from monitoring "FileExts"--> <!--Win8+-->
+      <TargetObject condition="end with">\UserChoice\Hash</TargetObject> <!--Windows: Remove noise from monitoring "FileExts"--> <!--Win8+-->
+      <TargetObject condition="end with">\OpenWithList\MRUList</TargetObject> <!--Windows: Remove noise from monitoring "FileExts"-->
+      <TargetObject condition="contains">Shell Extentions\Cached</TargetObject> <!--Windows: Remove noise generated by explorer.exe on monitored ShellCached binary keys--> <!--Win8+-->
+      <!--Group Policy noise-->
+      <TargetObject condition="end with">HKLM\System\CurrentControlSet\Control\Lsa\Audit\SpecialGroups</TargetObject> <!--Windows: Routinely set through Group Policy, not especially important to log-->
+      <TargetObject condition="end with">SOFTWARE\Microsoft\Windows\CurrentVersion\Group Policy\Scripts\Startup\0\PSScriptOrder</TargetObject> <!--Windows:Group Policy: Noise below the actual key while building-->
+      <TargetObject condition="end with">SOFTWARE\Microsoft\Windows\CurrentVersion\Group Policy\Scripts\Startup\0\SOM-ID</TargetObject> <!--Windows:Group Policy: Noise below the actual key while building-->
+      <TargetObject condition="end with">SOFTWARE\Microsoft\Windows\CurrentVersion\Group Policy\Scripts\Startup\0\GPO-ID</TargetObject> <!--Windows:Group Policy: Noise below the actual key while building-->
+      <TargetObject condition="end with">SOFTWARE\Microsoft\Windows\CurrentVersion\Group Policy\Scripts\Startup\0\0\IsPowershell</TargetObject> <!--Windows:Group Policy: Noise below the actual key while building-->
+      <TargetObject condition="end with">SOFTWARE\Microsoft\Windows\CurrentVersion\Group Policy\Scripts\Startup\0\0\ExecTime</TargetObject> <!--Windows:Group Policy: Noise below the actual key while building-->
+      <TargetObject condition="end with">SOFTWARE\Microsoft\Windows\CurrentVersion\Group Policy\Scripts\Shutdown\0\PSScriptOrder</TargetObject> <!--Windows:Group Policy: Noise below the actual key while building-->
+      <TargetObject condition="end with">SOFTWARE\Microsoft\Windows\CurrentVersion\Group Policy\Scripts\Shutdown\0\SOM-ID</TargetObject> <!--Windows:Group Policy: Noise below the actual key while building-->
+      <TargetObject condition="end with">SOFTWARE\Microsoft\Windows\CurrentVersion\Group Policy\Scripts\Shutdown\0\GPO-ID</TargetObject> <!--Windows:Group Policy: Noise below the actual key while building-->
+      <TargetObject condition="end with">SOFTWARE\Microsoft\Windows\CurrentVersion\Group Policy\Scripts\Shutdown\0\0\IsPowershell</TargetObject> <!--Windows:Group Policy: Noise below the actual key while building-->
+      <TargetObject condition="end with">SOFTWARE\Microsoft\Windows\CurrentVersion\Group Policy\Scripts\Shutdown\0\0\ExecTime</TargetObject> <!--Windows:Group Policy: Noise below the actual key while building-->
+      <TargetObject condition="contains">\safer\codeidentifiers\0\HASHES\{</TargetObject> <!--Windows: Software Restriction Policies. Can be used to disable security tools, but very noisy to monitor if you use it-->
+      <!--SECTION: Office C2R-->
+      <TargetObject condition="contains">VirtualStore\MACHINE\SOFTWARE\Microsoft\Office\ClickToRun\</TargetObject> <!--Microsoft: SearchProtocolHost writes to OfficeC2R registry for Outlook, seemingly regarding mail indexing-->
+      <TargetObject condition="begin with">HKLM\SOFTWARE\Microsoft\Office\ClickToRun\</TargetObject> <!--Microsoft: Virtual registry for Office-->
+      <!--SECTION: 3rd party-->
+      <Image condition="is">C:\Program Files\WIDCOMM\Bluetooth Software\btwdins.exe</Image> <!--Constantly writes to HKLM-->
+      <TargetObject condition="begin with">HKCR\VLC.</TargetObject> <!--VLC update noise-->
+      <TargetObject condition="begin with">HKCR\iTunes.</TargetObject> <!--Apple: iTunes update noise-->
+      <!--WINEVT publishers noise-->
+      <TargetObject condition="is">HKLM\Software\Microsoft\Windows\CurrentVersion\WINEVT\Publishers\{945a8954-c147-4acd-923f-40c45405a658}</TargetObject> <!--Windows update-->
+    </RegistryEvent>
+  </RuleGroup>
+
+<!-- Event ID: 15 FileCreateStreamHash  Events -->
+
+    <FileCreateStreamHash onmatch="exclude">
+    </FileCreateStreamHash>
+
+<!-- Event ID 19-21: WmiEvent -->
+
+    <WmiEvent onmatch="exclude">
+    </WmiEvent>
+
+      <RuleGroup name="" groupRelation="or">
+    <DnsQuery onmatch="exclude">
+      <!--Network noise-->
+      <QueryName condition="end with">.arpa.</QueryName> <!--Design decision to not log reverse DNS lookups. You will need to decide.-->
+      <QueryName condition="end with">.arpa</QueryName> <!--Design decision to not log reverse DNS lookups. You will need to decide.-->
+      <QueryName condition="end with">.msftncsi.com</QueryName> <!--Microsoft proxy detection | Microsoft default exclusion-->
+      <QueryName condition="is">..localmachine</QueryName>
+      <QueryName condition="is">localhost</QueryName>
+    </DnsQuery>
+  </RuleGroup>
+
+  </EventFiltering>
+</Sysmon>
