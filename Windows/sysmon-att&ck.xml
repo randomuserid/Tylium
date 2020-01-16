@@ -61,6 +61,8 @@
     <RegistryEvent onmatch="exclude">
     <!--COMMENT:  Remove low-information noise. Often these hide a procress recreating an empty key and do not hide the values created subsequently.-->
     <!--NOTE: A lot of noise can be removed by excluding CreateKey events, which are largely innocuous-->
+    <!-- Ackowledgemnts to SwiftonSecurity, https://gist.github.com/SwitHak/62fa7f8df378cae3a459670e3a18742d -->
+
       <TargetObject condition="contains">\{CAFEEFAC-</TargetObject>
       <EventType condition="is">CreateKey</EventType>
       <TargetObject condition="begin with">HKLM\COMPONENTS</TargetObject>
@@ -138,6 +140,8 @@
       <RuleGroup name="" groupRelation="or">
     <DnsQuery onmatch="exclude">
       <!--Network noise-->
+      <!-- Ackowledgemnts to SwiftonSecurity, https://gist.github.com/SwitHak/62fa7f8df378cae3a459670e3a18742d -->
+
       <QueryName condition="end with">.arpa.</QueryName> <!--Design decision to not log reverse DNS lookups. You will need to decide.-->
       <QueryName condition="end with">.arpa</QueryName> <!--Design decision to not log reverse DNS lookups. You will need to decide.-->
       <QueryName condition="end with">.msftncsi.com</QueryName> <!--Microsoft proxy detection | Microsoft default exclusion-->
