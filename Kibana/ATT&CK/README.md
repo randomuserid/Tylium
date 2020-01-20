@@ -7,9 +7,9 @@ A set of dashboards for sifting the ATT&CK data from a data coverage perspective
 -https://github.com/randomuserid/Tylium/tree/master/Windows
 -https://github.com/randomuserid/Tylium/tree/master/Suricata
 
-### Datasource matrix
+### Datasource Matrix
 
-This is a matrix for resolving ATT&CK data sources into specific log classes and events. These are the events and log message types measured in the dashboards. 
+This is a matrix for resolving ATT&CK data sources into specific log classes and events. These are the events and log message types measured in the dashboards.
 
 | Name                               | Source         | Auditbeat        | Winlogbeat               | Filebeat                              | Suricata                     |
 |------------------------------------|----------------|------------------|--------------------------|---------------------------------------|------------------------------|
