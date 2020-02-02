@@ -32,6 +32,10 @@
         "execve" : [ "modprobe", "-h"]
     },
     {
+        "name" : "ld.so.conf",
+        "execve" : [ "vi", "/etc/ld.so.conf"]
+    },
+    {
         "name" : "nmap",
         "execve" : [ "nmap"]
     },

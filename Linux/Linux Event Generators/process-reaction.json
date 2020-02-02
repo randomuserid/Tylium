@@ -9,6 +9,7 @@
         "ld.so",
         "mknod",
         "modprobe",
+	      "ld.so.conf",
         "nmap",
         "nping",
         "rmmod",
