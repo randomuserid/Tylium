@@ -5,26 +5,34 @@ A Chain Reactor (https://github.com/redcanaryco/chain-reactor) manifest for gene
 
 ### Setup
 
-Chain Reactor requires python3.
+Chain Reactor requires `python3`.
 
 Install dependencies:
 
 Debian:
-
+```
 sudo apt install musl-tools
+```
+
 RPM:
-
+```
 sudo yum install musl-tools
-Note: If your repository system doesn't contain musl-tools, you can build it from source:
+```
 
+*Note: If your repository system doesn't contain musl-tools, you can build it from source:*
+
+```
 git clone git://git.musl-libc.org/musl
 cd musl && ./configure && sudo make install
-Build Chain Reactor:
+```
 
+Build Chain Reactor:
+```
 make
+```
 
 ### Usage
 
 Run the command below to make the ELF binary. NOTE: make and run this in /tmp because certain hunting rules look for execution in the Linux /tmp directory. This manifest runs both a hidden and a visible process from /tmp.
 
-```python3 compose_reaction process-atoms.json process-reaction.json process
+`python3 compose_reaction atoms.json reaction.json <output_name_for_executable>`
