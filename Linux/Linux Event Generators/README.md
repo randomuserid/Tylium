@@ -1,7 +1,7 @@
 
 ### Linux Event Generators
 
-A Chain Reactor (https://github.com/redcanaryco/chain-reactor) manifest for generating Linux activity in order to test Auditbeat threat hunting searches and rules.
+A Chain Reactor (https://github.com/redcanaryco/chain-reactor) manifest for generating Linux activity in order to test Auditbeat threat hunting searches and rules. The SpaceCake project has over 100 hunting searches for Linux here: https://github.com/randomuserid/Adama/tree/master/Linux
 
 ### Setup
 
