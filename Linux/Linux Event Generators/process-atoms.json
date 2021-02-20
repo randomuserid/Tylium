@@ -1,27 +1,51 @@
 [
     {
-        "name" : "whoami",
-        "execve" : [ "whoami"]
+        "name" : "chmod",
+        "execve" : [ "chmod"]
+    },
+    {
+        "name" : "echo",
+        "execve" : [ "echo", "all your base are belong to us", ">", ".bash_history"]
+    },
+    {
+        "name" : "gzip",
+        "execve" : [ "gzip", "/etc/shadow"]
+    },
+    {
+        "name" : "hardware",
+        "execve" : [ "cat", "/sys/class/dmi/id/chassis_vendor"]
+    },
+    {
+        "name" : "hexdump",
+        "execve" : [ "hexdump", "foo"]
     },
     {
         "name" : "hping3",
         "execve" : [ "hping3", "--help"]
+    },   
+    {
+        "name" : "insmod",
+        "execve" : [ "insmod", "-h"]
     },
     {
         "name" : "iodine",
         "execve" : [ "iodine", "-h"]
     },
     {
-        "name" : "insmod",
-        "execve" : [ "insmod", "-h"]
-    },
-    {
         "name" : "kmod",
-        "execve" : [ "kmod", "-h"]
+        "execve" : [ "sudo", "kmod", "list"]
     },
     {
         "name" : "ld.so",
         "execve" : [ "/lib64/ld-linux-x86-64.so.2"]
+    },
+        {
+        "name" : "ld.so.conf",
+        "execve" : [ "vi", "/etc/ld.so.conf"]
+    },
+        {
+        "name" : "ld.so.preload",
+        "execve" : [ "vi", "/etc/ld.so.preload"]
     },
     {
         "name" : "mknod",
@@ -29,11 +53,7 @@
     },
     {
         "name" : "modprobe",
-        "execve" : [ "modprobe", "-h"]
-    },
-    {
-        "name" : "ld.so.conf",
-        "execve" : [ "vi", "/etc/ld.so.conf"]
+        "execve" : ["sudo", "modprobe", "-r"]
     },
     {
         "name" : "nmap",
@@ -42,10 +62,22 @@
     {
         "name" : "nping",
         "execve" : [ "nping"]
+    },    
+    {
+        "name" : "rm",
+        "execve" : [ "rm", "/var/log/secure/foo"]
     },
     {
         "name" : "rmmod",
         "execve" : [ "rmmod", "-h"]
+    },
+    {
+        "name" : "service",
+        "execve" : [ "service", "syslog", "stop"]
+    },
+    {
+        "name" : "shred",
+        "execve" : [ "shred", "-u"]
     },
     {
         "name" : "socat",
@@ -60,8 +92,12 @@
         "execve" : [ "tcpdump", "-h"]
     },
     {
-        "name" : "netcat",
-        "execve" : [ "nc", "localhost", "22", "exit" ]
+        "name" : "touch",
+        "execve" : [ "touch", "-t"]
+    },
+    {
+        "name" : "whoami",
+        "execve" : [ "whoami"]
     },
     {
         "name" : "visible",
@@ -74,5 +110,9 @@
         "copy" : [ "/proc/self/exe", "/tmp/.hidden"],
         "execve" : [ "/tmp/.hidden", "exit" ],
         "remove" : [ "/tmp/.hidden" ]
-    }
+    },
+    {
+        "name" : "netcat",
+        "execve" : [ "nc", "-l", "-p", "4444", "exit" ]
+    },
 ]
