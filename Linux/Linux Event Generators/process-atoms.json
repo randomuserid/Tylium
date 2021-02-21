@@ -5,7 +5,7 @@
     },
     {
         "name" : "echo",
-        "execve" : [ "echo", "https://github.com/randomuserid/Tylium/tree/master/Linux/Linux%20Event%20Generators", ">", ".bash_history"]
+        "execve" : [ "echo", "https://github.com/randomuserid/Tylium/tree/master/Linux", ">", ".bash_history"]
     },
     {
         "name" : "gzip",
