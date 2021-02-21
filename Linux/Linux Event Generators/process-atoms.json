@@ -113,6 +113,6 @@
     },
     {
         "name" : "netcat",
-        "execve" : [ "nc", "-l", "-p", "4444", "exit" ]
+        "execve" : [ "nc", "localhost", "22", "exit" ]
     },
 ]
