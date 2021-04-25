@@ -1,0 +1,120 @@
+<Sysmon schemaversion="4.50">
+  <!-- Capture all hashes -->
+  <HashAlgorithms>*</HashAlgorithms>
+  <CheckRevocation/>
+
+  <EventFiltering>
+ <!-- Event ID 1: Process creation -->
+
+<ProcessCreate onmatch="exclude">
+    </ProcessCreate>
+
+<!-- Event ID 2: A process changed a file creation time -->
+
+<FileCreateTime onmatch="exclude">
+</FileCreateTime>
+
+<!-- Event ID 3: Network Connection -->
+
+<NetworkConnect onmatch="exclude">
+  <DestinationIp condition="contains">255.255.</DestinationIp>
+  <DestinationIp condition="contains">239.255.</DestinationIp>
+  <DestinationIp condition="contains">127.0.</DestinationIp>
+  <DestinationIp condition="contains">0:0:0</DestinationIp>
+  </NetworkConnect>
+
+<!-- Event ID 5: Process terminated -->
+
+  <ProcessTerminate onmatch="exclude">
+   </ProcessTerminate>
+
+<!-- Event ID: 6 Driver Loaded -->
+
+<DriverLoad onmatch="exclude">
+  <Signature condition="contains">microsoft</Signature>
+  <Signature condition="contains">windows</Signature>
+</DriverLoad>
+
+<!--Event ID 7: Image loaded -->
+
+    <ImageLoad onmatch="exclude">
+    </ImageLoad>
+
+<!-- Event ID 8: CreateRemoteThread -->
+
+<CreateRemoteThread onmatch="exclude">
+  </CreateRemoteThread >
+
+<!-- Event ID 9 RawAccessRead -->
+<!-- Use only on DCs. Events are supernumerary -->
+
+<RawAccessRead onmatch="exclude">
+</RawAccessRead>
+
+<!-- Event ID 10: ProcessAccess -->
+
+<ProcessAccess onmatch="exclude">
+</ProcessAccess>
+
+<!-- Events are supernumerary. -->
+
+<!-- Event ID 11 FileCreate -->
+
+ <FileCreate onmatch="exclude">
+ </FileCreate>
+
+<!-- Event ID 12: RegistryEvent -->
+
+<RegistryEvent onmatch="exclude">
+</RegistryEvent>
+
+
+<!-- Event ID: 15 FileCreateStreamHash (alternate data stream) Events -->
+
+    <FileCreateStreamHash onmatch="exclude">
+    </FileCreateStreamHas50
+
+<!-- Events 17 & 18: Pipe Created, Pipe Connected -->
+
+<PipeEvent onmatch="exclude">
+</PipeEvent>
+
+<!-- Event ID 19-21: WmiEvent -->
+
+    <WmiEvent onmatch="exclude">
+    </WmiEvent>
+
+<!-- Event 22: DNS Query -->
+
+  <RuleGroup name="" groupRelation="or">
+    <DnsQuery onmatch="exclude">
+
+      <!--Network noise-->
+      <!-- Ackowledgemnts to SwiftonSecurity, https://gist.github.com/SwitHak/62fa7f8df378cae3a459670e3a18742d -->
+
+      <QueryName condition="end with">.arpa.</QueryName> <!--Design decision to not log reverse DNS lookups. You will need to decide.-->
+      <QueryName condition="end with">.arpa</QueryName> <!--Design decision to not log reverse DNS lookups. You will need to decide.-->
+      <QueryName condition="end with">.msftncsi.com</QueryName> <!--Microsoft proxy detection | Microsoft default exclusion-->
+      <QueryName condition="is">..localmachine</QueryName>
+      <QueryName condition="is">localhost</QueryName>
+    </DnsQuery>
+  </RuleGroup>
+
+  <!-- Event 23: File Delete -->
+
+  <FileDelete onmatch="exclude">
+  </FileDelete>
+
+<!-- Event 24: Clipboard -->
+
+<ClipboardChange onmatch="exclude">
+  </ClipboardChange>
+
+<!-- Event 25: Process Tampering -->
+
+<ProcessTampering onmatch="exclude">
+</ProcessTampering>
+
+
+  </EventFiltering>
+</Sysmon>
