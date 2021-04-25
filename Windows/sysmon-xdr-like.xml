@@ -37,8 +37,12 @@
 
 <!--Event ID 7: Image loaded -->
 
+<RuleGroup name="" groupRelation="and">
     <ImageLoad onmatch="exclude">
+      <Signature condition="is">Microsoft Windows</Signature>
+      <SignatureStatus condition="is">Valid</SignatureStatus>
     </ImageLoad>
+</RuleGroup>
 
 <!-- Event ID 8: CreateRemoteThread -->
 
@@ -53,26 +57,37 @@
 
 <!-- Event ID 10: ProcessAccess -->
 
-<ProcessAccess onmatch="exclude">
-</ProcessAccess>
+<RuleGroup name="" groupRelation="or">
+  <ProcessAccess onmatch="exclude">
+    <SourceImage condition="is">C:\ProgramData\Microsoft\Windows Defender\platform\4.18.2103.7-0\MsMpEng.exe</SourceImage>
+    <TargetImage condition="is">C:\ProgramData\Microsoft\Windows Defender\platform\4.18.2103.7-0\MsMpEng.exe</TargetImage>
+  </ProcessAccess>
+</RuleGroup>
 
 <!-- Events are supernumerary. -->
 
 <!-- Event ID 11 FileCreate -->
 
  <FileCreate onmatch="exclude">
+  <TargetFilename condition="is">C:\ProgramData\winlogbeat\.winlogbeat.yml.new</TargetFilename>
  </FileCreate>
 
 <!-- Event ID 12: RegistryEvent -->
 
-<RegistryEvent onmatch="exclude">
-</RegistryEvent>
 
+<RuleGroup name="" groupRelation="or">
+  <RegistryEvent onmatch="exclude">
+    <EventType condition="is">CreateKey</EventType>
+    <TargetObject condition="is">HKLM\COMPONENTS\DerivedData\VersionedIndex\10.0.17763.1876 (WinBuild.160101.0800)\UtilizedSpace_MCP_39072719</TargetObject>
+    <TargetObject condition="is">HKLM\COMPONENTS\ServicingStackVersions\10.0.17763.1876 (WinBuild.160101.0800)</TargetObject>
+    <TargetObject condition="is">HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\LastMappingPackageCache</TargetObject>
+  </RegistryEvent>
+</RuleGroup>
 
 <!-- Event ID: 15 FileCreateStreamHash (alternate data stream) Events -->
 
     <FileCreateStreamHash onmatch="exclude">
-    </FileCreateStreamHas50
+    </FileCreateStreamHash>
 
 <!-- Events 17 & 18: Pipe Created, Pipe Connected -->
 
