@@ -7,7 +7,7 @@
 # You can find the full configuration reference here:
 # https://www.elastic.co/guide/en/beats/winlogbeat/index.html
 
-#======================= Winlogbeat specific options ===========================
+# ======================== Winlogbeat specific options =========================
 
 # event_logs specifies a list of event logs to monitor as well as any
 # accompanying options. The YAML data type of event_logs is a list of
@@ -17,6 +17,7 @@
 # forwarded, ignore_older, level, event_id, provider, and include_xml. Please
 # visit the documentation for the complete details of each option.
 # https://go.es.io/WinlogbeatConfig
+
 winlogbeat.event_logs:
   - name: Application
     ignore_older: 72h
@@ -37,21 +38,63 @@ winlogbeat.event_logs:
           id: sysmon
           file: ${path.home}/module/sysmon/config/winlogbeat-sysmon.js
 
+  - name: Windows PowerShell
+    event_id: 400, 403, 600, 800
+    processors:
+      - script:
+          lang: javascript
+          id: powershell
+          file: ${path.home}/module/powershell/config/winlogbeat-powershell.js
+
+  - name: Microsoft-Windows-PowerShell/Operational
+    event_id: 4103, 4104, 4105, 4106
+    processors:
+      - script:
+          lang: javascript
+          id: powershell
+          file: ${path.home}/module/powershell/config/winlogbeat-powershell.js
+
+  - name: ForwardedEvents
+    tags: [forwarded]
+    processors:
+      - script:
+          when.equals.winlog.channel: Security
+          lang: javascript
+          id: security
+          file: ${path.home}/module/security/config/winlogbeat-security.js
+      - script:
+          when.equals.winlog.channel: Microsoft-Windows-Sysmon/Operational
+          lang: javascript
+          id: sysmon
+          file: ${path.home}/module/sysmon/config/winlogbeat-sysmon.js
+      - script:
+          when.equals.winlog.channel: Windows PowerShell
+          lang: javascript
+          id: powershell
+          file: ${path.home}/module/powershell/config/winlogbeat-powershell.js
+      - script:
+          when.equals.winlog.channel: Microsoft-Windows-PowerShell/Operational
+          lang: javascript
+          id: powershell
+          file: ${path.home}/module/powershell/config/winlogbeat-powershell.js
 
   - name: Microsoft-Windows-DriverFrameworks-UserMode/Operational
   - name: Microsoft-WIndows-DSC/Operational
   - name: Microsoft-Windows-Forwarding/Operational
   - name: Microsoft-Windows-Kernel-EventTracing/Admin
   - name: Microsoft-Windows-Kernel-ShimEngine/Operational
-  - name: Microsoft-Windows-PowerShell/Operational
+  - name: Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational
+  - name: Microsoft-Windows-RemoteDesktopServices-SessionServices/Operational
   - name: Microsoft-Windows-Shell-Core/Operational 
+  - name: Microsoft-Windows-TaskScheduler/Operational
+  - name: Microsoft-Windows-TerminalServices-LocalSessionManager/Operational
+  - name: Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational
   - name: Microsoft-Windows-WER-Diag/Operational
   - name: Microsoft-Windows-Windows Defender/Operational
   - name: Microsoft-Windows-WinRM/Operational
   - name: Microsoft-Windows-WMI-Activity/Operational
 
-
-#==================== Elasticsearch template settings ==========================
+# ====================== Elasticsearch template settings =======================
 
 setup.template.settings:
   index.number_of_shards: 1
@@ -59,7 +102,7 @@ setup.template.settings:
   #_source.enabled: false
 
 
-#================================ General =====================================
+# ================================== General ===================================
 
 # The name of the shipper that publishes the network data. It can be used to group
 # all the transactions sent by a single shipper in the web interface.
@@ -74,8 +117,7 @@ setup.template.settings:
 #fields:
 #  env: staging
 
-
-#============================== Dashboards =====================================
+# ================================= Dashboards =================================
 # These settings control loading the sample dashboards to the Kibana index. Loading
 # the dashboards is disabled by default and can be enabled either by setting the
 # options here or by using the `setup` command.
@@ -87,7 +129,7 @@ setup.template.settings:
 # website.
 #setup.dashboards.url:
 
-#============================== Kibana =====================================
+# =================================== Kibana ===================================
 
 # Starting with Beats version 6.0.0, the dashboards are loaded via the Kibana API.
 # This requires a Kibana endpoint configuration.
@@ -104,37 +146,43 @@ setup.template.settings:
   # the Default Space will be used.
   #space.id:
 
-#============================= Elastic Cloud ==================================
+# =============================== Elastic Cloud ================================
 
 # These settings simplify using Winlogbeat with the Elastic Cloud (https://cloud.elastic.co/).
 
 # The cloud.id setting overwrites the `output.elasticsearch.hosts` and
 # `setup.kibana.host` options.
 # You can find the `cloud.id` in the Elastic Cloud web UI.
-#cloud.id: "-"
+#cloud.id:
 
 # The cloud.auth setting overwrites the `output.elasticsearch.username` and
 # `output.elasticsearch.password` settings. The format is `<user>:<pass>`.
-#cloud.auth: "elastic:password"
+#cloud.auth:
 
-#================================ Outputs =====================================
+# The cloud.auth setting overwrites the `output.elasticsearch.username` and
+# `output.elasticsearch.password` settings. The format is `<user>:<pass>`.
+
+# ================================== Outputs ===================================
 
 # Configure what output to use when sending the data collected by the beat.
 
-##-------------------------- Elasticsearch output ------------------------------
+# ---------------------------- Elasticsearch Output ----------------------------
 #output.elasticsearch:
   # Array of hosts to connect to.
   #hosts: ["localhost:9200"]
 
-  # Optional protocol and basic auth credentials.
+  # Protocol - either `http` (default) or `https`.
   #protocol: "https"
+
+  # Authentication credentials - either API key or username/password.
+  #api_key: "id:api_key"
   #username: "elastic"
   #password: "changeme"
 
-#----------------------------- Logstash output --------------------------------
+# ------------------------------ Logstash Output -------------------------------
 #output.logstash:
   # The Logstash hosts
-  #hosts: ["10.10.10.10:5044"]
+  #hosts: ["localhost:5044"]
 
   # Optional SSL. By default is off.
   # List of root certificates for HTTPS server verifications
@@ -146,15 +194,13 @@ setup.template.settings:
   # Client Certificate Key
   #ssl.key: "/etc/pki/client/cert.key"
 
-#================================ Processors =====================================
-
-# Configure processors to enhance or manipulate events generated by the beat.
-
+# ================================= Processors =================================
 processors:
-  - add_host_metadata: ~
+  - add_host_metadata:
+      when.not.contains.tags: forwarded
   - add_cloud_metadata: ~
 
-#================================ Logging =====================================
+# ================================== Logging ===================================
 
 # Sets log level. The default log level is info.
 # Available log levels are: error, warning, info, debug
@@ -162,16 +208,21 @@ processors:
 
 # At debug level, you can selectively enable logging only for some components.
 # To enable all selectors use ["*"]. Examples of other selectors are "beat",
-# "publish", "service".
+# "publisher", "service".
 #logging.selectors: ["*"]
 
-#============================== Xpack Monitoring ===============================
-# winlogbeat can export internal metrics to a central Elasticsearch monitoring
+# ============================= X-Pack Monitoring ==============================
+# Winlogbeat can export internal metrics to a central Elasticsearch monitoring
 # cluster.  This requires xpack monitoring to be enabled in Elasticsearch.  The
 # reporting is disabled by default.
 
 # Set to true to enable the monitoring reporter.
 #monitoring.enabled: false
+
+# Sets the UUID of the Elasticsearch cluster under which monitoring data for this
+# Winlogbeat instance will appear in the Stack Monitoring UI. If output.elasticsearch
+# is enabled, the UUID is derived from the Elasticsearch cluster referenced by output.elasticsearch.
+#monitoring.cluster_uuid:
 
 # Uncomment to send the metrics to Elasticsearch. Most settings from the
 # Elasticsearch output are accepted here as well.
@@ -182,7 +233,30 @@ processors:
 # uncomment the following line.
 #monitoring.elasticsearch:
 
-#================================= Migration ==================================
+# ============================== Instrumentation ===============================
+
+# Instrumentation support for the winlogbeat.
+#instrumentation:
+    # Set to true to enable instrumentation of winlogbeat.
+    #enabled: false
+
+    # Environment in which winlogbeat is running on (eg: staging, production, etc.)
+    #environment: ""
+
+    # APM Server hosts to report instrumentation results to.
+    #hosts:
+    #  - http://localhost:8200
+
+    # API Key for the APM Server(s).
+    # If api_key is set then secret_token will be ignored.
+    #api_key:
+
+    # Secret token for the APM Server(s).
+    #secret_token:
+
+
+# ================================= Migration ==================================
 
 # This allows to enable 6.7 migration aliases
 #migration.6_to_7.enabled: true
+
