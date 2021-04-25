@@ -78,6 +78,8 @@ winlogbeat.event_logs:
           id: powershell
           file: ${path.home}/module/powershell/config/winlogbeat-powershell.js
 
+  - name: Microsoft-Windows-Audit-CVE
+  - name: Microsoft-Windows-CodeIntegrity/Operational
   - name: Microsoft-Windows-DriverFrameworks-UserMode/Operational
   - name: Microsoft-WIndows-DSC/Operational
   - name: Microsoft-Windows-Forwarding/Operational
@@ -85,12 +87,18 @@ winlogbeat.event_logs:
   - name: Microsoft-Windows-Kernel-ShimEngine/Operational
   - name: Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational
   - name: Microsoft-Windows-RemoteDesktopServices-SessionServices/Operational
-  - name: Microsoft-Windows-Shell-Core/Operational 
+  - name: Microsoft-Windows-SmbClient/Security
+  - name: Microsoft-Windows-Shell-Core/Operational
+  - name: Microsoft-Windows-TaskScheduler/Maintenance
   - name: Microsoft-Windows-TaskScheduler/Operational
   - name: Microsoft-Windows-TerminalServices-LocalSessionManager/Operational
+  - name: Microsoft-Windows-TerminalServices/Operational
   - name: Microsoft-Windows-TerminalServices-RemoteConnectionManager/Operational
+  - name: Microsoft-Windows-WAS
   - name: Microsoft-Windows-WER-Diag/Operational
+  - name: Microsoft-Windows-WLAN-AutoConfig/Operational
   - name: Microsoft-Windows-Windows Defender/Operational
+  - name: Microsoft-Windows-WindowsUpdateClient/Operational
   - name: Microsoft-Windows-WinRM/Operational
   - name: Microsoft-Windows-WMI-Activity/Operational
 
