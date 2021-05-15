@@ -28,6 +28,6 @@
         "whoami",
         "visible",
         "hidden",
-        "netcat",
+        "netcat"
     ]
 }

@@ -114,5 +114,5 @@
     {
         "name" : "netcat",
         "execve" : [ "nc", "localhost", "22", "exit" ]
-    },
+    }
 ]
