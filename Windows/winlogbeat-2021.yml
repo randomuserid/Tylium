@@ -78,14 +78,19 @@ winlogbeat.event_logs:
           id: powershell
           file: ${path.home}/module/powershell/config/winlogbeat-powershell.js
 
+  - name: Active Directory Web Services
+  - name: DFS Replication
+  - name: Directory Service
+  - name: DNS Server  
   - name: Microsoft-Windows-Audit-CVE
   - name: Microsoft-Windows-CodeIntegrity/Operational
   - name: Microsoft-Windows-DriverFrameworks-UserMode/Operational
   - name: Microsoft-WIndows-DSC/Operational
   - name: Microsoft-Windows-Forwarding/Operational
+  - name: Microsoft-Windows-GroupPolicy/Operational
   - name: Microsoft-Windows-Kernel-EventTracing/Admin
   - name: Microsoft-Windows-Kernel-ShimEngine/Operational
-  - name: Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational
+#  - name: Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational
   - name: Microsoft-Windows-RemoteDesktopServices-SessionServices/Operational
   - name: Microsoft-Windows-SmbClient/Security
   - name: Microsoft-Windows-Shell-Core/Operational
