@@ -4,10 +4,6 @@
         "execve" : [ "chmod"]
     },
     {
-        "name" : "echo",
-        "execve" : [ "echo", "https://github.com/randomuserid/Tylium/tree/master/Linux", ">", ".bash_history"]
-    },
-    {
         "name" : "gzip",
         "execve" : [ "gzip", "/etc/shadow"]
     },
