@@ -91,6 +91,7 @@ winlogbeat.event_logs:
   - name: Microsoft-Windows-Kernel-EventTracing/Admin
   - name: Microsoft-Windows-Kernel-ShimEngine/Operational
 #  - name: Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational
+  - name: Microsoft-Windows-PrintService/Operational
   - name: Microsoft-Windows-RemoteDesktopServices-SessionServices/Operational
   - name: Microsoft-Windows-SmbClient/Security
   - name: Microsoft-Windows-Shell-Core/Operational
