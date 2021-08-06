@@ -83,6 +83,7 @@ winlogbeat.event_logs:
   - name: Directory Service
   - name: DNS Server  
   - name: Microsoft-Windows-Audit-CVE
+  - name: Microsoft-Windows-Bits-Client/Operational
   - name: Microsoft-Windows-CodeIntegrity/Operational
   - name: Microsoft-Windows-DriverFrameworks-UserMode/Operational
   - name: Microsoft-WIndows-DSC/Operational
