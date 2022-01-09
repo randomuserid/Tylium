@@ -1,114 +1,289 @@
 [
-    {
-        "name" : "chmod",
-        "execve" : [ "chmod"]
-    },
-    {
-        "name" : "gzip",
-        "execve" : [ "gzip", "/etc/shadow"]
-    },
-    {
-        "name" : "hardware",
-        "execve" : [ "cat", "/sys/class/dmi/id/chassis_vendor"]
-    },
-    {
-        "name" : "hexdump",
-        "execve" : [ "hexdump", "foo"]
-    },
-    {
-        "name" : "hping3",
-        "execve" : [ "hping3", "--help"]
-    },   
-    {
-        "name" : "insmod",
-        "execve" : [ "insmod", "-h"]
-    },
-    {
-        "name" : "iodine",
-        "execve" : [ "iodine", "-h"]
-    },
-    {
-        "name" : "kmod",
-        "execve" : [ "sudo", "kmod", "list"]
-    },
-    {
-        "name" : "ld.so",
-        "execve" : [ "/lib64/ld-linux-x86-64.so.2"]
-    },
-        {
-        "name" : "ld.so.conf",
-        "execve" : [ "vi", "/etc/ld.so.conf"]
-    },
-        {
-        "name" : "ld.so.preload",
-        "execve" : [ "vi", "/etc/ld.so.preload"]
-    },
-    {
-        "name" : "mknod",
-        "execve" : [ "mknod", "--help"]
-    },
-    {
-        "name" : "modprobe",
-        "execve" : ["sudo", "modprobe", "-r"]
-    },
-    {
-        "name" : "nmap",
-        "execve" : [ "nmap"]
-    },
-    {
-        "name" : "nping",
-        "execve" : [ "nping"]
-    },    
-    {
-        "name" : "rm",
-        "execve" : [ "rm", "/var/log/secure/foo"]
-    },
-    {
-        "name" : "rmmod",
-        "execve" : [ "rmmod", "-h"]
-    },
-    {
-        "name" : "service",
-        "execve" : [ "service", "syslog", "stop"]
-    },
-    {
-        "name" : "shred",
-        "execve" : [ "shred", "-u"]
-    },
-    {
-        "name" : "socat",
-        "execve" : [ "socat", "-h"]
-    },
-    {
-        "name" : "strace",
-        "execve" : [ "strace", "-h"]
-    },
-    {
-        "name" : "tcpdump",
-        "execve" : [ "tcpdump", "-h"]
-    },
-    {
-        "name" : "touch",
-        "execve" : [ "touch", "-t"]
-    },
-    {
-        "name" : "whoami",
-        "execve" : [ "whoami"]
-    },
-    {
-        "name" : "visible",
-        "copy" : [ "/proc/self/exe", "/tmp/visible"],
-        "execve" : [ "/tmp/visible", "exit" ],
-        "remove" : [ "/tmp/visible" ]
-    },
-    {
-        "name" : "hidden",
-        "copy" : [ "/proc/self/exe", "/tmp/.hidden"],
-        "execve" : [ "/tmp/.hidden", "exit" ],
-        "remove" : [ "/tmp/.hidden" ]
-    },
-    {
-        "name" : "netcat",
-        "execve" : [ "nc", "localhost", "22", "exit" ]
-    }
+  {
+    "name": "apt1",
+    "execve": [
+      "apt",
+      "install",
+      "iodine",
+      "-y"
+    ]
+  },
+  {
+    "name": "apt2",
+    "execve": [
+      "apt",
+      "install",
+      "hping3",
+      "-y"
+    ]
+  },
+  {
+    "name": "apt3",
+    "execve": [
+      "apt",
+      "install",
+      "nmap",
+      "-y"
+    ]
+  },
+  {
+    "name": "apt4",
+    "execve": [
+      "apt",
+      "install",
+      "nping",
+      "-y"
+    ]
+  },
+  {
+    "name": "apt5",
+    "execve": [
+      "apt",
+      "install",
+      "socat",
+      "-y"
+    ]
+  },
+  {
+    "name": "apt6",
+    "execve": [
+      "apt",
+      "install",
+      "selinux-utils",
+      "-y"
+    ]
+  },
+  {
+    "name": "base32",
+    "execve": [
+      "base32",
+      "--help"
+    ]
+  },
+  {
+    "name": "chmod",
+    "execve": [
+      "chmod"
+    ]
+  },
+  {
+    "name": "gzip",
+    "execve": [
+      "gzip",
+      "-c",
+      "/etc/shadow",
+      ">",
+      "file.gz"
+    ]
+  },
+  {
+    "name": "hardware",
+    "execve": [
+      "cat",
+      "/sys/class/dmi/id/chassis_vendor"
+    ]
+  },
+  {
+    "name": "hexdump",
+    "execve": [
+      "hexdump",
+      "foo"
+    ]
+  },
+  {
+    "name": "hping3",
+    "execve": [
+      "hping3",
+      "--help"
+    ]
+  },
+  {
+    "name": "insmod",
+    "execve": [
+      "insmod",
+      "-h"
+    ]
+  },
+  {
+    "name": "iodine",
+    "execve": [
+      "iodine",
+      "-h"
+    ]
+  },
+  {
+    "name": "kmod",
+    "execve": [
+      "sudo",
+      "kmod",
+      "list"
+    ]
+  },
+  {
+    "name": "mknod",
+    "execve": [
+      "mknod",
+      "--help"
+    ]
+  },
+  {
+    "name": "modprobe",
+    "execve": [
+      "sudo",
+      "modprobe",
+      "-r"
+    ]
+  },
+  {
+    "name": "nmap",
+    "execve": [
+      "nmap"
+    ]
+  },
+  {
+    "name": "nping",
+    "execve": [
+      "nping"
+    ]
+  },
+  {
+    "name": "rm",
+    "execve": [
+      "rm",
+      "/var/log/secure/foo"
+    ]
+  },
+  {
+    "name": "rmmod",
+    "execve": [
+      "rmmod",
+      "-h"
+    ]
+  },
+  {
+    "name": "service",
+    "execve": [
+      "service",
+      "syslog",
+      "stop"
+    ]
+  },
+  {
+    "name": "setenforce",
+    "execve": [
+      "setenforce",
+      "0"
+    ]
+  },
+  {
+    "name": "shred",
+    "execve": [
+      "shred",
+      "-u"
+    ]
+  },
+  {
+    "name": "socat",
+    "execve": [
+      "socat",
+      "-h"
+    ]
+  },
+  {
+    "name": "strace",
+    "execve": [
+      "strace",
+      "-h"
+    ]
+  },
+  {
+    "name": "tcpdump",
+    "execve": [
+      "tcpdump",
+      "-h"
+    ]
+  },
+  {
+    "name": "telnet-internal",
+    "execve": [
+      "telnet",
+      "10.0.0.1",
+      "exit"
+    ]
+  },
+  {
+    "name": "telnet-external",
+    "execve": [
+      "telnet",
+      "8.8.8.8",
+      "exit"
+    ]
+  },
+  {
+    "name": "touch",
+    "execve": [
+      "touch",
+      "-t"
+    ]
+  },
+  {
+    "name": "ufw",
+    "execve": [
+      "ufw",
+      "disable"
+    ]
+  },
+  {
+    "name": "web-shell",
+    "execve": [
+      "sudo",
+      "-u",
+      "www-data",
+      "/bin/dash",
+      "exit"
+    ]
+  },
+  {
+    "name": "whoami",
+    "execve": [
+      "whoami"
+    ]
+  },
+  {
+    "name": "visible",
+    "copy": [
+      "/proc/self/exe",
+      "/tmp/visible"
+    ],
+    "execve": [
+      "/tmp/visible",
+      "exit"
+    ],
+    "remove": [
+      "/tmp/visible"
+    ]
+  },
+  {
+    "name": "hidden",
+    "copy": [
+      "/proc/self/exe",
+      "/tmp/.hidden"
+    ],
+    "execve": [
+      "/tmp/.hidden",
+      "exit"
+    ],
+    "remove": [
+      "/tmp/.hidden"
+    ]
+  },
+  {
+    "name": "netcat",
+    "execve": [
+      "nc",
+      "localhost",
+      "22",
+      "exit"
+    ]
+  }
 ]
